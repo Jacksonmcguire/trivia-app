@@ -1,4 +1,33 @@
 .current-q {
   display: flex;
   flex-flow: column;
+  background-color: #3D5A80;
+  button {
+    background-color: #293241;
+    height: 3em;
+    width: 20%;
+    border-radius: 10px;
+    align-self: center;
+    margin-top: 5em;
+  }
+  height: 25em;
+  width: 40em;
+  border-radius: 10px;
+  margin: 2em;
+}
+
+.option {
+  background-color: #293241;
+  margin: 5px;
+  border: 1px solid #E0FBFC;
+  width: 80%;
+  align-self: center;
+  input {
+    display:list-item
+  }
+  label {
+    display: inline-block;
+    width: 100%;
+    // padding-right: 45%;
+  }
 }
