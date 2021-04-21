@@ -8,7 +8,7 @@ export class NewGameForm extends React.Component {
     this.state = {
       difficulty: '',
       category: '',
-      amount: '',
+      amount: 10,
       type: '',
       room: '',
     }
@@ -39,6 +39,7 @@ export class NewGameForm extends React.Component {
     this.props.generateSlideDeck(fetchUrl)
   }
 
+
   render () {
     return (
     <form className="new-game"
@@ -53,7 +54,7 @@ export class NewGameForm extends React.Component {
         <option>Category</option>
         {this.categoryOptions()}
       </select>
-      <input type="number" name="amount" placeholder="Number of Slides"/>
+      <input type="number" name="amount" placeholder="Number of Slides" required/>
       <div>
       <input type="radio" name="type" id="boolean"/>
       <label htmlFor="boolean">True / False</label>
