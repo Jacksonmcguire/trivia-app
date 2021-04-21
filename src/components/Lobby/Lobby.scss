@@ -1,0 +1,7 @@
+.lobby {
+  display: grid;
+  grid-template: 2fr 1fr / 1fr 1fr;
+  &.new-game {
+    grid-area: 1 / 2 / 2 / 2;
+  }
+}
