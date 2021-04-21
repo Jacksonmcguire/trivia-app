@@ -1,5 +1,31 @@
 .new-game {
   display: flex;
   flex-flow: column wrap;
-  margin: 5em
+  margin: 5em;
+  padding: 10px;
+  background-color: grey;
+  border-radius: 3px;
+  select, input[type="number"] {
+    width: 50%;
+    margin-top: 5px;
+  }
+  label {
+    margin: 10px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 1px solid white;
+  }
+  div {
+    display: flex;
+    justify-content: space-around;
+  }
 }
+
+input[type="radio"] {
+  display: none;
+  &:checked + label {
+    border-color: blue;
+  }
+}
+
+
