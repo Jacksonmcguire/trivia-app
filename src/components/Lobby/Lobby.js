@@ -12,6 +12,7 @@ export class Lobby extends Component {
     this.state = {
       categories: [],
       randomSets: [],
+      
     }
   }
 
@@ -24,10 +25,13 @@ export class Lobby extends Component {
       .then(data => this.setState({...this.state, randomSets: [...this.state.randomSets, data.results]}))
     } 
   }
+
+
+
   render() {return (
     <main className="lobby">
       <JoinGameForm/>
-      <NewGameForm categories={this.state.categories}/>
+      <NewGameForm categories={this.state.categories} generateSlideDeck={this.props.generateSlideDeck}/>
       <SlideGallery slideDecks={this.state.randomSets}/>
     </main>
   )}

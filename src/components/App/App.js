@@ -2,14 +2,32 @@ import './App.scss';
 import { Lobby } from '../Lobby/Lobby'
 import { InGame } from '../InGame/InGame'
 import { Route } from 'react-router-dom'
+import { getChosenDeck } from '../../apiCalls'
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <Route exact path='/'><Lobby/></Route>
-      <Route exact path='/play'><InGame/></Route>
-    </div>
-  );
+class App extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      activeSlides: [],
+    }
+  }
+
+  generateSlideDeck = (str) => {
+    getChosenDeck(str)
+    .then(data => {
+      this.setState({activeSlides: data.results})
+    })
+  }  
+  render() {
+    return (
+      <div className="App">
+        <Route exact path='/'><Lobby generateSlideDeck={this.generateSlideDeck}/></Route>
+        <Route exact path='/play'><InGame/></Route>
+      </div>
+    );
+  }
 }
 
 export default App;
