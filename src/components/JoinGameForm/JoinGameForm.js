@@ -1,7 +1,7 @@
 import './JoinGame.scss'
 export const JoinGameForm = () => {
   return (
-    <div>Join Game
+    <div className="join-game">Join Game
       <input placeholder="Room Number"/>
       <input placeholder="Username"/>
       <button>Join</button>
