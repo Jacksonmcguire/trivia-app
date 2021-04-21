@@ -1,7 +1,7 @@
 import './App.scss';
 import { Lobby } from '../Lobby/Lobby'
 import { InGame } from '../InGame/InGame'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { getChosenDeck } from '../../apiCalls'
 import React from 'react';
 
@@ -23,8 +23,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Switch>
         <Route exact path='/'><Lobby generateSlideDeck={this.generateSlideDeck}/></Route>
-        <Route exact path='/play'><InGame/></Route>
+        <Route exact path='/play'><InGame slides={this.state.activeSlides}/></Route>
+        </Switch>
       </div>
     );
   }

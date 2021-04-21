@@ -2,9 +2,13 @@
   color: #E0FBFC;
 }
 
+.App, body, html {
+  height: 100%;
+  background-color: #293241;
+}
+
 .App {
   text-align: center;
-  background-color: #293241;
 }
 
 .App-logo {
