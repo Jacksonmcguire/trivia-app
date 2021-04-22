@@ -32,7 +32,7 @@ export class Lobby extends Component {
     <main className="lobby">
       <JoinGameForm/>
       <NewGameForm categories={this.state.categories} generateSlideDeck={this.props.generateSlideDeck}/>
-      <SlideGallery slideDecks={this.state.randomSets}/>
+      {/* <SlideGallery slideDecks={this.state.randomSets}/> */}
     </main>
   )}
 }
