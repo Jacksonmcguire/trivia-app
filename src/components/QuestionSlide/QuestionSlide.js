@@ -1,17 +1,49 @@
 import './QuestionSlide.scss'
-export const QuestionSlide = () => {
+import { useState } from 'react'
+import { decodeHTML } from '../../utilities'
+
+export const QuestionSlide = ({category, incorrectAnswers, correct, question, type, evaluateAnswer}) => {
+
+  const [answer, setAnswer] = useState('')
+
+  const addAnswers = () => {
+    const randomIndex = Math.floor(Math.random() * 4)
+    if (!incorrectAnswers.includes(correct)) {
+      incorrectAnswers.splice(randomIndex, 0, correct);
+    }
+    return incorrectAnswers.map((answer, index) => {
+      return <div className="option">
+      <input type="checkbox" id={'opt' + index + 1} name="option"/>
+      <label htmlFor={'opt' + index + 1}>{decodeHTML(answer)}</label>
+      </div>
+    })
+    
+  }
+
+  const answerQuestion = (e) => {
+    e.preventDefault()
+    if (answer !== '') evaluateAnswer(decodeHTML(correct), answer)
+    clearInputs()
+  }
+
+  const updateAnswer = (e) => {
+    const inputs = document.querySelectorAll('input[type="checkbox"]')
+    inputs.forEach(input => {
+      if (input !== e.target) input.checked = false;
+    })
+    setAnswer(e.target.labels[0].innerText)
+  }
+
+  const clearInputs = () => {
+    const inputs = document.querySelectorAll('input[type="checkbox"]')
+    inputs.forEach(input => input.checked = false)
+  } 
+
   return (
-    <form className="current-q">
-      <h3>Question</h3>
-      <input type="radio" id="opt1" name="option"/>
-      <label htmlFor="opt1">Option 1</label> 
-      <input type="radio" id="opt2" name="option"/>
-      <label htmlFor="opt2">Option 2</label> 
-      <input type="radio" id="opt3" name="option"/>
-      <label htmlFor="opt3">Option 3</label> 
-      <input type="radio" id="opt4" name="option"/>
-      <label htmlFor="opt4">Option 4</label> 
-      <button>Submit Answer</button>
+    <form className="current-q" onChange={(e) => updateAnswer(e)}>
+      <h3>{decodeHTML(question)}</h3>
+      {addAnswers()}
+      <button onClick={answerQuestion}>Submit Answer</button>
     </form>
   )
 }

@@ -1,11 +1,13 @@
 .new-game {
   display: flex;
   flex-flow: column wrap;
-  margin: 5em;
+  margin: 1em 1em 0 0;
   padding: 2em;
   background-color: #3D5A80;
   border-radius: 3px;
-  color: #E0FBFC;
+  color: #293241;
+  font-weight: 800;
+  font-size: 1.2em;
   select, input, label, button {
     border-radius: 3px;
     border: none;
@@ -13,18 +15,24 @@
     color: #E0FBFC;
     font-size: 1.2em;
     background-color: #293241;
-
   }
   label {
     margin: 10px;
-    padding: 8px;
     border-radius: 15px;
     border: 1px solid #E0FBFC;
     cursor: pointer;
+    width: 49%;
   }
   div {
     display: flex;
-    justify-content: space-around;
+  }
+  button {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #E0FBFC;
+  }
+  input[type="number"] {
+    width: 35%;
   }
 }
 
