@@ -2,7 +2,7 @@
   color: #E0FBFC;
 }
 
-.App, body, html {
+.App, body, html, #root {
   height: 100%;
   background-color: #293241;
 }
@@ -16,21 +16,29 @@
   pointer-events: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header {
+  background-color: #3D5A80;
+  height: 15%;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #293241;
+  font-weight: 700;
+  font-size: 2.4em;
+  width: 100%;
 }
 
 .App-link {

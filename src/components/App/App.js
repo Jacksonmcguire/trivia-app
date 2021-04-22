@@ -23,6 +23,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <header>Trivia App</header>
         <Switch>
         <Route exact path='/'><Lobby generateSlideDeck={this.generateSlideDeck}/></Route>
         <Route exact path='/play'><InGame slides={this.state.activeSlides}/></Route>
