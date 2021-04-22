@@ -1,6 +1,5 @@
 import { QuestionSlide } from '../QuestionSlide/QuestionSlide'
 import { ScoreBoard } from '../ScoreBoard/ScoreBoard'
-import {GrPrevious , GrNext} from 'react-icons/gr'
 import './InGame.scss'
 import { Component } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
@@ -28,6 +27,7 @@ export class InGame extends Component {
           question={question.question}
           type={question.type}
           evaluateAnswer={this.evaluateAnswer}
+          key={question.question}
           />
           )
         })
@@ -45,10 +45,8 @@ export class InGame extends Component {
       render () {
     return (
       <main className="in-game">
-        <GrPrevious/>
         {this.questionSlides()}
-        <GrNext/>
-        <ScoreBoard/>
+        <ScoreBoard question={this.state.currentQuestion} score={this.state.score}/>
       </main>
     )
   }
