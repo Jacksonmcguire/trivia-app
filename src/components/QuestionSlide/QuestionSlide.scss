@@ -8,9 +8,9 @@
     width: 20%;
     border-radius: 10px;
     align-self: center;
-    margin-top: 5em;
+    margin-top: 2em;
+    font-size: 1.3em; 
   }
-  height: 25em;
   width: 40em;
   border-radius: 10px;
   margin: 2em;
@@ -19,15 +19,21 @@
 .option {
   background-color: #293241;
   margin: 5px;
-  border: 1px solid #E0FBFC;
   width: 80%;
   align-self: center;
-  input {
-    display:list-item
+  input[type="checkbox"] {
+    display:list-item;
+    transform: scale(2);
+    color: #3D5A80;
+    margin: .5em;
+    color: black;
   }
   label {
+    margin: 5px;
     display: inline-block;
     width: 100%;
+    font-size: .9em;
+    font-weight: 700;
     // padding-right: 45%;
   }
 }
