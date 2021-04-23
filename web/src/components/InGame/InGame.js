@@ -4,7 +4,6 @@ import './InGame.scss'
 import { useState, useEffect, useRef } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
 import {Chat} from '../Chat/Chat'
-import io from "socket.io-client"
 import {socket} from '../App/App'
 
 export const InGame = ({slideDeck}) => {
@@ -17,6 +16,9 @@ export const InGame = ({slideDeck}) => {
     socket.on('new game', (roomName) => {
       console.log('new game in room:', roomName)
     })
+
+    socket.on('answer received')
+
   })
 
   const questionSlides = () => {
@@ -42,8 +44,10 @@ export const InGame = ({slideDeck}) => {
   const evaluateAnswer = (correct, answer) => {
     if (answer === correct) {
       setScore(score + 1)
+      socket.emit('correct answer', correct)
     } else {
       setIncorrectAnswers([...incorrectAnswers, answer])
+      socket.emit('wrong answer', answer)
     }
     setCurrentQuestion(currentQuestion + 1)
 
