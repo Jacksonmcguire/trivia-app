@@ -1,6 +1,8 @@
 import './NewGameForm.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { socket } from '../App/App'
+
 export class NewGameForm extends React.Component {
 
   constructor() {
@@ -32,8 +34,10 @@ export class NewGameForm extends React.Component {
       if (this.state[prop] !== '' && index !== 0 && prop !== 'room') {
         fetchUrl += `&${prop + '=' + this.state[prop]}`
       }
-      else if (this.state[prop] !== '' && index === 0) {
+      else if (this.state[prop] !== '' && index === 0 && prop !== 'room') {
         fetchUrl = `${prop + '=' + this.state[prop]}`
+      } else if (prop === 'room') {
+        socket.emit('create game', this.state[prop])
       }
     })
     this.props.generateSlideDeck(fetchUrl)

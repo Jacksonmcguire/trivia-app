@@ -5,6 +5,7 @@ import { JoinGameForm } from '../JoinGameForm/JoinGameForm'
 import { NewGameForm } from '../NewGameForm/NewGameForm'
 import { SlideGallery } from '../SlideGallery/SlideGallery'
 import './Lobby.scss'
+import {socket} from '../App/App'
 
 export class Lobby extends Component {
   constructor() {

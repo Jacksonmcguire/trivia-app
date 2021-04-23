@@ -1,24 +1,28 @@
 import { QuestionSlide } from '../QuestionSlide/QuestionSlide'
 import { ScoreBoard } from '../ScoreBoard/ScoreBoard'
 import './InGame.scss'
-import { Component } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
-export class InGame extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentQuestion: 0,
-      slides: [],
-      score: 0,
-      incorrectAnswers: [],
-    }
-  }
+import {Chat} from '../Chat/Chat'
+import io from "socket.io-client"
+import {socket} from '../App/App'
+
+export const InGame = ({slideDeck}) => {
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [score, setScore] = useState(0)
+  const [incorrectAnswers, setIncorrectAnswers] = useState([])
   
 
-  questionSlides = () => {
-    if (this.props.slides.length) {
-      const slides = this.props.slides.map(question => {
-        console.log(question)
+  useEffect(() => {
+    socket.on('new game', (roomName) => {
+      console.log('new game in room:', roomName)
+    })
+  })
+
+  const questionSlides = () => {
+    if (slideDeck.length) {
+      const slideCards = slideDeck.map(question => {
+        // console.log(question)
         return (
           <QuestionSlide
           category={question.category}
@@ -26,28 +30,30 @@ export class InGame extends Component {
           correct={question.correct_answer}
           question={question.question}
           type={question.type}
-          evaluateAnswer={this.evaluateAnswer}
+          evaluateAnswer={evaluateAnswer}
           key={question.question}
           />
           )
         })
-      return slides[this.state.currentQuestion]? slides[this.state.currentQuestion] : <EndSlide slides={slides} score={this.state.score}/>
+      return slideCards[currentQuestion]? slideCards[currentQuestion] : <EndSlide slideCards={slideDeck} score={score}/>
       } else return <div>sorry</div>
   }
 
-  evaluateAnswer = (correct, answer) => {
+  const evaluateAnswer = (correct, answer) => {
     if (answer === correct) {
-      this.setState({...this.state, score: this.state.score + 1, currentQuestion: this.state.currentQuestion + 1})
-    } else this.setState({...this.state, incorrectAnswers: [...this.state.incorrectAnswers, answer], currentQuestion: this.state.currentQuestion + 1})
+      setScore(score + 1)
+    } else {
+      setIncorrectAnswers([...incorrectAnswers, answer])
+    }
+    setCurrentQuestion(currentQuestion + 1)
 
   }
       
-      render () {
-    return (
-      <main className="in-game">
-        {this.questionSlides()}
-        <ScoreBoard question={this.state.currentQuestion} score={this.state.score}/>
-      </main>
-    )
-  }
+  return (
+    <main className="in-game">
+      {questionSlides()}
+      <ScoreBoard question={currentQuestion} score={score}/>
+      <Chat></Chat>
+    </main>
+  )
 }
