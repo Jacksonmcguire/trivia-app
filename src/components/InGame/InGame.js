@@ -5,8 +5,7 @@ import { useState, useEffect } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
 export const InGame = ({ slides, startNewRound, gameStats }) => {
 
-  // const [gameScore, setGameScore] = useState({score: 0, questions: 0})
-  
+
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
