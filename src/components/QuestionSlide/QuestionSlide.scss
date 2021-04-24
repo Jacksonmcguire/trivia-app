@@ -11,29 +11,30 @@
     margin-top: 2em;
     font-size: 1.3em; 
   }
-  width: 40em;
+  width: 50%;
   border-radius: 10px;
   margin: 2em;
+  height: 50%;
+  padding-bottom: 1em;
 }
 
 .option {
+  display: flex;
   background-color: #293241;
   margin: 5px;
   width: 80%;
   align-self: center;
+  padding: 10px;
   input[type="checkbox"] {
     display:list-item;
-    transform: scale(2);
+    transform: scale(2.3);
     color: #3D5A80;
-    margin: .5em;
     color: black;
   }
   label {
-    margin: 5px;
     display: inline-block;
     width: 100%;
-    font-size: .9em;
+    font-size: 1.4em;
     font-weight: 700;
-    // padding-right: 45%;
   }
 }
