@@ -1,11 +1,12 @@
 .new-game {
+  align-self: center;
   display: flex;
   flex-flow: column wrap;
   margin: 1em 1em 0 0;
   padding: 2em;
   background-color: #3D5A80;
   border-radius: 3px;
-  color: #293241;
+  color: #E0FBFC;
   font-weight: 800;
   font-size: 1.2em;
   select, input, label, button {
@@ -44,4 +45,35 @@ input[type="radio"] {
   }
 }
 
-
+@media screen and (max-width: 500px) {
+  .new-game {
+    // width: 80%;
+    margin: .5em;
+    align-self: center;
+    select, input, label, button {
+      border-radius: 3px;
+      border: none;
+      margin-top: 5px;
+      color: #E0FBFC;
+      font-size: 1.5em;
+      background-color: #293241;
+      width: 100%
+    }
+    label {
+      border-radius: 15px;
+      border: 1px solid #E0FBFC;
+      cursor: pointer;
+      width: 50%;
+    }
+    div {
+      display: flex;
+    }
+    button {
+      width: 90%;
+      border: 1px solid #E0FBFC;
+    }
+    input[type="number"] {
+      width: 80%;
+    }
+  }
+}

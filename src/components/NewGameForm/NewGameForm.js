@@ -10,7 +10,6 @@ export class NewGameForm extends React.Component {
       category: '',
       amount: 10,
       type: '',
-      room: '',
     }
   }
 
@@ -29,7 +28,7 @@ export class NewGameForm extends React.Component {
   fetchTriviaSet = () => {
     let fetchUrl = '';
     Object.keys(this.state).forEach((prop, index) => {
-      if (this.state[prop] !== '' && index !== 0 && prop !== 'room') {
+      if (this.state[prop] !== '' && index !== 0) {
         fetchUrl += `&${prop + '=' + this.state[prop]}`
       }
       else if (this.state[prop] !== '' && index === 0) {
@@ -54,14 +53,13 @@ export class NewGameForm extends React.Component {
         <option>Category</option>
         {this.categoryOptions()}
       </select>
-      <input type="number" name="amount" placeholder="Number of Slides" required/>
+      <input type="number" name="amount" placeholder="Number of Slides" required min="1"/>
       <div>
       <input type="radio" name="type" id="boolean"/>
       <label htmlFor="boolean">True / False</label>
       <input type="radio" name="type" id="multiple"/>
       <label htmlFor="multiple">Multiple Choice</label>
       </div>
-      <input name="room" placeholder="Room Name"/>
       <Link to="/play" onClick={() => this.fetchTriviaSet()}>
       <button>Start</button>
       </Link>
