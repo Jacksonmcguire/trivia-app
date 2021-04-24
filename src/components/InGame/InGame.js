@@ -1,23 +1,32 @@
 import { QuestionSlide } from '../QuestionSlide/QuestionSlide'
 import { ScoreBoard } from '../ScoreBoard/ScoreBoard'
 import './InGame.scss'
-import { Component } from 'react'
+import { useState, useEffect } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
-export class InGame extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentQuestion: 0,
-      slides: [],
-      score: 0,
-      incorrectAnswers: [],
-    }
-  }
-  
+export const InGame = ({ slides, startNewRound, gameStats }) => {
 
-  questionSlides = () => {
-    if (this.props.slides.length) {
-      const slides = this.props.slides.map(question => {
+  // const [gameScore, setGameScore] = useState({score: 0, questions: 0})
+  
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [score, setScore] = useState(0)
+  const [incorrectAnswers, setIncorrectAnswers] = useState([])
+  const [correctAnswers, setCorrectAnswers] = useState([])
+  
+  const newRound = () => {
+    console.log(score)
+    const roundArgs = {correct: score, length: slides.length, incorrect: incorrectAnswers, correctAnswers: correctAnswers }
+    setCurrentQuestion(0)
+    setScore(0)
+    setCorrectAnswers([])
+    setIncorrectAnswers([])
+    startNewRound(roundArgs);
+    (console.log(slides))
+  }
+
+  const questionSlides = () => {
+    console.log(slides)
+    if (slides.length) {
+      const slideDeck = slides.map(question => {
         console.log(question)
         return (
           <QuestionSlide
@@ -26,28 +35,33 @@ export class InGame extends Component {
           correct={question.correct_answer}
           question={question.question}
           type={question.type}
-          evaluateAnswer={this.evaluateAnswer}
+          evaluateAnswer={evaluateAnswer}
           key={question.question}
           />
           )
         })
-      return slides[this.state.currentQuestion]? slides[this.state.currentQuestion] : <EndSlide slides={slides} score={this.state.score}/>
+      const currentQ = slideDeck[currentQuestion]
+      return currentQ? currentQ : <EndSlide slides={slides} score={score} newRound={newRound}/>
       } else return <div>sorry</div>
   }
 
-  evaluateAnswer = (correct, answer) => {
+  const evaluateAnswer = (correct, answer, question) => {
     if (answer === correct) {
-      this.setState({...this.state, score: this.state.score + 1, currentQuestion: this.state.currentQuestion + 1})
-    } else this.setState({...this.state, incorrectAnswers: [...this.state.incorrectAnswers, answer], currentQuestion: this.state.currentQuestion + 1})
+      setScore(score + 1)
+      setCorrectAnswers([...correctAnswers, question])
+    } else {
+      setIncorrectAnswers([...incorrectAnswers, {question: question, correct: correct, answer: answer}])
+    }
+    setCurrentQuestion(currentQuestion + 1)
 
   }
+
       
-      render () {
     return (
       <main className="in-game">
-        {this.questionSlides()}
-        <ScoreBoard question={this.state.currentQuestion} score={this.state.score}/>
+        {questionSlides()}
+        <ScoreBoard question={currentQuestion} score={score} gameScore={gameStats}/>
       </main>
     )
-  }
+  
 }
