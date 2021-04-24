@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react'
 import { Component } from 'react'
 import { getCategories, getRandomDeck } from '../../apiCalls'
-import { JoinGameForm } from '../JoinGameForm/JoinGameForm'
 import { NewGameForm } from '../NewGameForm/NewGameForm'
 import { SlideGallery } from '../SlideGallery/SlideGallery'
 import './Lobby.scss'
