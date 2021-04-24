@@ -22,7 +22,8 @@ export const QuestionSlide = ({category, incorrectAnswers, correct, question, ty
 
   const answerQuestion = (e) => {
     e.preventDefault()
-    if (answer !== '') evaluateAnswer(decodeHTML(correct), answer)
+    if (answer !== '') {
+      evaluateAnswer(decodeHTML(correct), answer, question)}
     clearInputs()
   }
 

@@ -1,6 +1,6 @@
 .lobby {
-  display: grid;
-  grid-template: 1fr 1fr / 1fr 1fr;
   height: 85%;
+  display: flex;
+  flex-flow: column;
 }
 
