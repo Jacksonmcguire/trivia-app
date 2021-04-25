@@ -3,7 +3,8 @@ import { ScoreBoard } from '../ScoreBoard/ScoreBoard'
 import './InGame.scss'
 import { useState, useEffect } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
-export const InGame = ({ slides, startNewRound, gameStats }) => {
+import PropTypes from 'prop-types'
+export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
 
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -12,21 +13,24 @@ export const InGame = ({ slides, startNewRound, gameStats }) => {
   const [correctAnswers, setCorrectAnswers] = useState([])
   
   const newRound = () => {
-    console.log(score)
     const roundArgs = {correct: score, length: slides.length, incorrect: incorrectAnswers, correctAnswers: correctAnswers }
+    console.log(roundArgs)
+    startNewRound(roundArgs);
     setCurrentQuestion(0)
     setScore(0)
     setCorrectAnswers([])
     setIncorrectAnswers([])
-    startNewRound(roundArgs);
-    (console.log(slides))
+  }
+
+  const updateAppState = () => {
+    const roundArgs = {correct: score, length: slides.length, incorrect: incorrectAnswers, correctAnswers: correctAnswers }
+    endGame(roundArgs)
+    console.log(roundArgs)
   }
 
   const questionSlides = () => {
-    console.log(slides)
     if (slides.length) {
       const slideDeck = slides.map(question => {
-        console.log(question)
         return (
           <QuestionSlide
           category={question.category}
@@ -40,7 +44,7 @@ export const InGame = ({ slides, startNewRound, gameStats }) => {
           )
         })
       const currentQ = slideDeck[currentQuestion]
-      return currentQ? currentQ : <EndSlide slides={slides} score={score} newRound={newRound}/>
+      return currentQ? currentQ : <EndSlide slides={slides} score={score} newRound={newRound} endGame={updateAppState}/>
       } else return <div>sorry</div>
   }
 
@@ -63,4 +67,11 @@ export const InGame = ({ slides, startNewRound, gameStats }) => {
       </main>
     )
   
+}
+
+InGame.propTypes = {
+   slides: PropTypes.array.isRequired, 
+   startNewRound: PropTypes.func.isRequired, 
+   gameStats: PropTypes.object.isRequired, 
+   endGame: PropTypes.func.isRequired
 }
