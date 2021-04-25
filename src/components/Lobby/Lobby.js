@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { func } from 'prop-types'
 import { Component } from 'react'
 import { getCategories, getRandomDeck } from '../../apiCalls'
 import { NewGameForm } from '../NewGameForm/NewGameForm'
@@ -25,11 +26,13 @@ export class Lobby extends Component {
     } 
   }
 
-
-
   render() {return (
     <main className="lobby">
       <NewGameForm categories={this.state.categories} generateSlideDeck={this.props.generateSlideDeck}/>
     </main>
   )}
+}
+
+Lobby.propTypes = {
+  generateSlideDeck: func,
 }
