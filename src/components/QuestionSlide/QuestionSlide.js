@@ -1,6 +1,7 @@
 import './QuestionSlide.scss'
 import { useState } from 'react'
 import { decodeHTML } from '../../utilities'
+import { array, func, object, string } from 'prop-types'
 
 export const QuestionSlide = ({category, incorrectAnswers, correct, question, type, evaluateAnswer}) => {
 
@@ -47,4 +48,13 @@ export const QuestionSlide = ({category, incorrectAnswers, correct, question, ty
       <button onClick={answerQuestion}>Submit Answer</button>
     </form>
   )
+}
+
+QuestionSlide.propTypes = {
+  category: string.isRequired, 
+  incorrectAnswers: array.isRequired, 
+  correct: object.isRequired, 
+  question: string.isRequired, 
+  type: string.isRequired, 
+  evaluateAnswer: func.isRequired
 }

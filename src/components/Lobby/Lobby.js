@@ -34,5 +34,5 @@ export class Lobby extends Component {
 }
 
 Lobby.propTypes = {
-  generateSlideDeck: func,
+  generateSlideDeck: func.isRequired,
 }
