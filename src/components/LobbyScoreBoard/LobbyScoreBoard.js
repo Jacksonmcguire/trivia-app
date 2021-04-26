@@ -1,5 +1,6 @@
 import { Disclosure } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
+import { object } from "prop-types"
 import { decodeHTML } from "../../utilities"
 import './LobbyScoreBoard.scss'
 
@@ -28,4 +29,8 @@ export const LobbyScoreBoard = ({totalStats}) => {
   return (
     <div className="lobby-score">Previous Games: {previousGames}</div>
   )
+}
+
+LobbyScoreBoard.propTypes = {
+  totalStats: object,
 }
