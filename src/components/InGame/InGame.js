@@ -6,7 +6,6 @@ import { EndSlide } from '../EndSlide/EndSlide'
 import PropTypes from 'prop-types'
 export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
 
-
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
