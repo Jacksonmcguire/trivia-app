@@ -4,6 +4,7 @@ import './InGame.scss'
 import { useState, useEffect } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
 import PropTypes from 'prop-types'
+import { decodeHTML } from '../../utilities'
 export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -11,9 +12,14 @@ export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
   const [correctAnswers, setCorrectAnswers] = useState([])
   
-  const newRound = () => {
-    const roundArgs = {correct: score, length: slides.length, incorrect: incorrectAnswers, correctAnswers: correctAnswers }
-    console.log(roundArgs)
+  const newRound = (total = slides.length) => {
+    const roundArgs = {
+      correct: score, 
+      length: total, 
+      incorrect: incorrectAnswers, 
+      correctAnswers: correctAnswers, 
+      category: slides[0].category 
+    }
     startNewRound(roundArgs);
     setCurrentQuestion(0)
     setScore(0)
@@ -21,10 +27,21 @@ export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
     setIncorrectAnswers([])
   }
 
-  const updateAppState = () => {
-    const roundArgs = {correct: score, length: slides.length, incorrect: incorrectAnswers, correctAnswers: correctAnswers }
+  useEffect(() => {
+    slides.forEach(slide => {
+      determineRepeats(slide)
+    });
+  }, [slides])
+
+  const updateAppState = (total = slides.length) => {
+    const roundArgs = {
+      correct: score, 
+      length: total, 
+      incorrect: incorrectAnswers, 
+      correctAnswers: correctAnswers,
+      category: slides[0].category 
+    }
     endGame(roundArgs)
-    console.log(roundArgs)
   }
 
   const questionSlides = () => {
@@ -32,19 +49,24 @@ export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
       const slideDeck = slides.map(question => {
         return (
           <QuestionSlide
-          category={question.category}
           incorrectAnswers={question.incorrect_answers}
           correct={question.correct_answer}
           question={question.question}
-          type={question.type}
           evaluateAnswer={evaluateAnswer}
           key={question.question}
           />
           )
-        })
+      })
       const currentQ = slideDeck[currentQuestion]
-      return currentQ? currentQ : <EndSlide slides={slides} score={score} newRound={newRound} endGame={updateAppState}/>
-      } else return <div>sorry</div>
+      const endSlide = <EndSlide slides={slides} score={score} newRound={newRound} endGame={updateAppState}/>
+      return currentQ? currentQ : endSlide;
+    } else return <div>sorry</div>
+  }
+
+  const determineRepeats = (currentQ) => {
+    if (currentQ && gameStats.correctQuestions.includes(decodeHTML(currentQ.question))) {
+      newRound(0)
+    } else return true
   }
 
   const evaluateAnswer = (correct, answer, question) => {
@@ -55,7 +77,6 @@ export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
       setIncorrectAnswers([...incorrectAnswers, {question: question, correct: correct, answer: answer}])
     }
     setCurrentQuestion(currentQuestion + 1)
-
   }
 
       
