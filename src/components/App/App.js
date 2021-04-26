@@ -4,6 +4,7 @@ import { InGame } from '../InGame/InGame'
 import { Route, Switch } from 'react-router-dom'
 import { getChosenDeck } from '../../apiCalls'
 import React, { useEffect, useState } from 'react';
+import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 const App = () => {
   const [activeSlides, setActiveSlides] = useState([])
@@ -58,7 +59,7 @@ const App = () => {
   
     return (
       <div className="App">
-        <header>Trivia App</header>
+        <header>Trivia Fanatics</header>
         <Switch>
         <Route exact path='/'>
           <Lobby 
@@ -72,6 +73,9 @@ const App = () => {
           gameStats={gameScore}
           endGame={endGame}
           />
+        </Route>
+        <Route path=''>
+          <ErrorPage></ErrorPage>
         </Route>
         </Switch>
       </div>
