@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { decodeHTML } from '../../utilities'
 import { array, func, object, string } from 'prop-types'
 
-export const QuestionSlide = ({category, incorrectAnswers, correct, question, type, evaluateAnswer}) => {
+export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAnswer}) => {
 
   const [answer, setAnswer] = useState('')
 
