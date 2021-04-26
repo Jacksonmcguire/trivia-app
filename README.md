@@ -11,7 +11,7 @@
 
 ## Deployed Site
 
-[Trivia App]()
+[Trivia App](https://trivia-fanatics.herokuapp.com/)
 
 ### Learning Goals:
  * Build an app with a niche audience in mind
@@ -58,7 +58,7 @@
   * Clone down the repo through the command line
   * Run `$npm install` to install dependencies
   * Run `$npm start` to open the page on a local browser
-* Otherwise the site is deployed and accessible [here]() 
+* Otherwise the site is deployed and accessible [here](https://trivia-fanatics.herokuapp.com/) 
 
 ## Running Tests
 * After completing the setup steps above:
