@@ -11,7 +11,7 @@
 
 ## Deployed Site
 
-[Trivia App](https://trivia-fanatics.herokuapp.com/)
+[Trivia Fanatics](https://trivia-fanatics.herokuapp.com/)
 
 ### Learning Goals:
  * Build an app with a niche audience in mind
