@@ -3,6 +3,7 @@ import './ScoreBoard.scss'
 import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { number, object } from 'prop-types'
+import { Link } from 'react-router-dom';
 
 export const ScoreBoard = ({question, score, gameScore}) => {
   const incorrectAnswers = gameScore.incorrect.map(incorrect => <p>{decodeHTML(incorrect.question)}<br></br> You answered: {decodeHTML(incorrect.answer)}</p>)
@@ -19,6 +20,7 @@ export const ScoreBoard = ({question, score, gameScore}) => {
           {incorrectAnswers}
         </Disclosure.Panel>
       </Disclosure>
+      <Link to='/'>Abandon Round...</Link>
     </div>
   )
 }
