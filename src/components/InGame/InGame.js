@@ -4,7 +4,6 @@ import './InGame.scss'
 import { useState, useEffect } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
 import PropTypes from 'prop-types'
-import { decodeHTML } from '../../utilities'
 export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -64,7 +63,7 @@ export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
   }
 
   const determineRepeats = (currentQ) => {
-    if (currentQ && gameStats.correctQuestions.includes(decodeHTML(currentQ.question))) {
+    if (currentQ && gameStats.correctQuestions.includes(currentQ.question)) {
       newRound(0)
     } else return true
   }

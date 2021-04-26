@@ -38,3 +38,17 @@
     font-weight: 700;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  main {
+    height: 60%;
+  }
+  .current-q {
+    width: 100%;
+    margin: .2em;
+    height: 100%;
+    button {
+      width: 100%;;
+    }
+  }
+}

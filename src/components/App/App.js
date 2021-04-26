@@ -4,6 +4,7 @@ import { InGame } from '../InGame/InGame'
 import { Route, Switch } from 'react-router-dom'
 import { getChosenDeck } from '../../apiCalls'
 import React, { useEffect, useState } from 'react';
+import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 const App = () => {
   const [activeSlides, setActiveSlides] = useState([])
@@ -18,7 +19,7 @@ const App = () => {
       const scores = JSON.parse(localStorage.getItem('scores'))
       setTotalStats(scores || [])
     }
-  }, [])
+  }, [totalStats.length])
 
   useEffect(() => {
     if (gameScore.total > 0) {
@@ -33,6 +34,10 @@ const App = () => {
       setActiveSlides(data.results)
     })
   }  
+  const clearHistory = () => {
+    localStorage.clear()
+    setTotalStats([]) 
+  }
 
   const startNewRound = ({correct, length, incorrect, correctAnswers, category}) => {
     endRound(correct, length, incorrect, correctAnswers, category)
@@ -53,29 +58,30 @@ const App = () => {
     endRound(correct, length, incorrect, correctAnswers, category)
   }
 
-
-
-  
-    return (
-      <div className="App">
-        <header>Trivia App</header>
-        <Switch>
-        <Route exact path='/'>
-          <Lobby 
-          generateSlideDeck={generateSlideDeck}
-          totalStats={totalStats}/>
-        </Route>
-        <Route exact path='/play'>
-          <InGame 
-          slides={activeSlides} 
-          startNewRound={startNewRound}
-          gameStats={gameScore}
-          endGame={endGame}
-          />
-        </Route>
-        </Switch>
-      </div>
-    );
+  return (
+    <div className="App">
+      <header>Trivia Fanatics</header>
+      <Switch>
+      <Route exact path='/'>
+        <Lobby 
+        generateSlideDeck={generateSlideDeck}
+        totalStats={totalStats}
+        clearHistory={clearHistory}/>
+      </Route>
+      <Route exact path='/play'>
+        <InGame 
+        slides={activeSlides} 
+        startNewRound={startNewRound}
+        gameStats={gameScore}
+        endGame={endGame}
+        />
+      </Route>
+      <Route path=''>
+        <ErrorPage></ErrorPage>
+      </Route>
+      </Switch>
+    </div>
+  );
 }
 
 export default App;

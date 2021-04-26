@@ -33,4 +33,20 @@
       transform: rotate(180deg);
     }
   }
+  a {
+    align-self: flex-start;
+    position: fixed;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .score-board {
+    width: 100%;
+    margin: .2em;
+    height: 97%;
+    a {
+      margin-top: 1em;
+      position: relative;
+    }
+  }
 }
