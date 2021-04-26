@@ -1,6 +1,7 @@
 import './NewGameForm.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 export class NewGameForm extends React.Component {
 
   constructor() {
@@ -66,4 +67,9 @@ export class NewGameForm extends React.Component {
     </form>
   )
   }
+}
+
+NewGameForm.propTypes = {
+  generateSlideDeck: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired
 }

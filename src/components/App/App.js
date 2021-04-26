@@ -3,55 +3,79 @@ import { Lobby } from '../Lobby/Lobby'
 import { InGame } from '../InGame/InGame'
 import { Route, Switch } from 'react-router-dom'
 import { getChosenDeck } from '../../apiCalls'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-class App extends React.Component {
+const App = () => {
+  const [activeSlides, setActiveSlides] = useState([])
+  const [activeSearch, setActiveSearch] = useState('')
+  const [gameScore, setGameScore] = useState({correct: 0, total: 0, incorrect: [], correctQuestions: []})
+  const [totalStats, setTotalStats] = useState([])
 
-  constructor() {
-    super();
-    this.state = {
-      activeSlides: [],
-      activeSearch: '',
-      gameScore: {correct: 0, total: 0, incorrect: [], correctQuestions: []}
+
+
+  useEffect(() => {
+    if (!totalStats.length) {
+      const scores = JSON.parse(localStorage.getItem('scores'))
+      setTotalStats(scores || [])
     }
-  }
+  }, [])
 
-  generateSlideDeck = (str) => {
+  useEffect(() => {
+    if (gameScore.total > 0) {
+      localStorage.setItem('scores', JSON.stringify([...totalStats, gameScore]))
+    }
+  }, [gameScore, totalStats])
+
+  const generateSlideDeck = (str) => {
     getChosenDeck(str)
     .then(data => {
-      console.log(data)
-      this.setState({activeSlides: data.results, activeSearch: str})
+      setActiveSearch(str)
+      setActiveSlides(data.results)
     })
   }  
 
-  startNewRound = ({correct, length, incorrect, correctAnswers}) => {
-    this.generateSlideDeck(this.state.activeSearch)
-    
-    this.setState({...this.state, gameScore: {
-      correct: this.state.gameScore.correct + correct,
-      total: this.state.gameScore.total + length, 
-      incorrect: [...this.state.gameScore.incorrect, ...incorrect],
-      correctQuestions: [...this.state.gameScore.correctQuestions, ...correctAnswers]
-    }})
+  const startNewRound = ({correct, length, incorrect, correctAnswers}) => {
+    endRound(correct, length, incorrect, correctAnswers)
+    generateSlideDeck(activeSearch)
   }
 
-  render() {
+  const endRound = (correct, length, incorrect, correctAnswers) => {
+    setGameScore({
+      correct: Number(gameScore.correct + correct),
+      total: Number(gameScore.total + length), 
+      incorrect: [...gameScore.incorrect, ...incorrect],
+      correctQuestions: [...gameScore.correctQuestions, ...correctAnswers]
+  })
+  
+}
+
+  const endGame = ({correct, length, incorrect, correctAnswers}) => {
+    endRound(correct, length, incorrect, correctAnswers)
+  }
+
+
+
+  
     return (
       <div className="App">
         <header>Trivia App</header>
         <Switch>
-        <Route exact path='/'><Lobby generateSlideDeck={this.generateSlideDeck}/></Route>
+        <Route exact path='/'>
+          <Lobby 
+          generateSlideDeck={generateSlideDeck}
+          totalStats={totalStats}/>
+        </Route>
         <Route exact path='/play'>
           <InGame 
-          slides={this.state.activeSlides} 
-          startNewRound={this.startNewRound}
-          gameStats={this.state.gameScore}
+          slides={activeSlides} 
+          startNewRound={startNewRound}
+          gameStats={gameScore}
+          endGame={endGame}
           />
         </Route>
         </Switch>
       </div>
     );
-  }
 }
 
 export default App;

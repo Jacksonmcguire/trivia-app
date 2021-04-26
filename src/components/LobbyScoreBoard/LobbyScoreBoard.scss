@@ -1,0 +1,43 @@
+.lobby-questions {
+  display: flex;
+  flex-flow: column;
+  font-size: 1.1em;
+  overflow-y: scroll;
+}
+
+.lobby-score {
+  align-self: center;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 30%;
+  margin: 1em 1em 0 0;
+  padding: 1em;
+  background-color: #3D5A80;
+  border-radius: 3px;
+  color: #E0FBFC;
+  font-weight: 800;
+  width: 28%;
+  button {
+    align-self: center;
+    border-radius: 3px;
+    border: none;
+    margin-top: 5px;
+    color: #E0FBFC;
+    width: 50%;
+    font-size: 1.2em;
+    background-color: #293241;
+    svg {
+      float: right;
+      height: 1em;
+      width: 1em;
+    }
+  }
+  button[aria-expanded="true"] {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}
