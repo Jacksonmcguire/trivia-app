@@ -5,7 +5,6 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { number, object } from 'prop-types'
 
 export const ScoreBoard = ({question, score, gameScore}) => {
-  console.log(gameScore)
   const incorrectAnswers = gameScore.incorrect.map(incorrect => <p>{decodeHTML(incorrect.question)}<br></br> You answered: {decodeHTML(incorrect.answer)}</p>)
   return (
     <div className="score-board">ScoreBoard

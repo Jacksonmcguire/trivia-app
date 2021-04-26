@@ -1,36 +1,39 @@
-import { Disclosure } from "@headlessui/react"
+import { Popover } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
-import { object } from "prop-types"
+import { array, object } from "prop-types"
 import { decodeHTML } from "../../utilities"
 import './LobbyScoreBoard.scss'
 
 export const LobbyScoreBoard = ({totalStats}) => {
-  console.log(totalStats)
-  
-  const previousGames = totalStats.map(game => {
-    const incorrectAnswers = game.incorrect.map(incorrect => <p>{decodeHTML(incorrect.question)}<br></br> You answered: {decodeHTML(incorrect.answer)}</p>)
-    const correctAnswers = game.correctQuestions.map(correct => <p>{decodeHTML(correct)}</p>)
-    return <Disclosure>
-      <Disclosure.Button>
-        {game.correct + '/' + game.total}
+  const previousGames = totalStats.map((game, index) => {
+    const incorrectAnswers = game.incorrect.map((incorrect, index) => <p key={index}>{decodeHTML(incorrect.question)}<br></br> You answered: {decodeHTML(incorrect.answer)}</p>)
+    const correctAnswers = game.correctQuestions.map((correct) => <p key={correct}>{decodeHTML(correct)}</p>)
+    return <Popover key={index}>
+      <Popover.Button>
+        {game.category + ' ' + game.correct + '/' + game.total}
         <ChevronDownIcon></ChevronDownIcon> 
-      </Disclosure.Button>
-      <Disclosure.Panel>
+      </Popover.Button>
+      <Popover.Panel>
+        <div className="popover-panel">
         <div className="lobby-questions">Correct Questions:
         {correctAnswers}
         </div>
         <div className="lobby-questions">Incorrect Questions:
         {incorrectAnswers}
         </div>
-      </Disclosure.Panel>
-    </Disclosure>
+        </div>
+      </Popover.Panel>
+    </Popover>
   })
 
   return (
-    <div className="lobby-score">Previous Games: {previousGames}</div>
+    <div className="lobby-score">
+      <h2>Previous Games:</h2>
+      {previousGames}
+    </div>
   )
 }
 
 LobbyScoreBoard.propTypes = {
-  totalStats: object,
+  totalStats: array,
 }

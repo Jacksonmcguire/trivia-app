@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 const App = () => {
   const [activeSlides, setActiveSlides] = useState([])
   const [activeSearch, setActiveSearch] = useState('')
-  const [gameScore, setGameScore] = useState({correct: 0, total: 0, incorrect: [], correctQuestions: []})
+  const [gameScore, setGameScore] = useState({correct: 0, total: 0, incorrect: [], correctQuestions: [], category: ''})
   const [totalStats, setTotalStats] = useState([])
 
 
@@ -34,23 +34,23 @@ const App = () => {
     })
   }  
 
-  const startNewRound = ({correct, length, incorrect, correctAnswers}) => {
-    endRound(correct, length, incorrect, correctAnswers)
+  const startNewRound = ({correct, length, incorrect, correctAnswers, category}) => {
+    endRound(correct, length, incorrect, correctAnswers, category)
     generateSlideDeck(activeSearch)
   }
 
-  const endRound = (correct, length, incorrect, correctAnswers) => {
+  const endRound = (correct, length, incorrect, correctAnswers, category) => {
     setGameScore({
       correct: Number(gameScore.correct + correct),
       total: Number(gameScore.total + length), 
       incorrect: [...gameScore.incorrect, ...incorrect],
-      correctQuestions: [...gameScore.correctQuestions, ...correctAnswers]
-  })
-  
+      correctQuestions: [...gameScore.correctQuestions, ...correctAnswers],
+      category: category
+  })  
 }
 
-  const endGame = ({correct, length, incorrect, correctAnswers}) => {
-    endRound(correct, length, incorrect, correctAnswers)
+  const endGame = ({correct, length, incorrect, correctAnswers, category}) => {
+    endRound(correct, length, incorrect, correctAnswers, category)
   }
 
 
