@@ -1,7 +1,7 @@
 import './QuestionSlide.scss'
 import { useState } from 'react'
 import { decodeHTML } from '../../utilities'
-import { array, func, object, string } from 'prop-types'
+import { array, func, string } from 'prop-types'
 
 export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAnswer}) => {
 
@@ -13,7 +13,7 @@ export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAns
       incorrectAnswers.splice(randomIndex, 0, correct);
     }
     return incorrectAnswers.map((answer, index) => {
-      return <div className="option">
+      return <div className="option" key={index}>
       <input type="checkbox" id={'opt' + index + 1} name="option"/>
       <label htmlFor={'opt' + index + 1}>{decodeHTML(answer)}</label>
       </div>
@@ -51,10 +51,8 @@ export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAns
 }
 
 QuestionSlide.propTypes = {
-  category: string.isRequired, 
   incorrectAnswers: array.isRequired, 
-  correct: object.isRequired, 
+  correct: string.isRequired, 
   question: string.isRequired, 
-  type: string.isRequired, 
   evaluateAnswer: func.isRequired
 }
