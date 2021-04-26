@@ -1,6 +1,6 @@
-# Trivia-App
+# Trivia Fanatics
 
-## Contributors 
+## Jackson McGuire 
 
 [<img src="https://img.shields.io/badge/LinkedIn-jackson--mcguire-informational?style=for-the-badge&labelColor=black&logo=linkedin&logoColor=0077b5&&color=0FBBD6"/>][linkedin2]
 [<img src="https://img.shields.io/badge/Github-jacksonmcguire-informational?style=for-the-badge&labelColor=black&logo=github&color=8B0BD5"/>][github2]
@@ -11,35 +11,37 @@
 
 ## Deployed Site
 
-[Trivia App](https://metapi-app.herokuapp.com/)
+[Trivia App]()
 
 ### Learning Goals:
  * Build an app with a niche audience in mind
  * Continue gaining familiarity with React / Cypress / Router
 #### Wins:
  * Gained confidence with React / Cypress / Router
- * Kept up with sprint deadlines and never felt pressed for time
+ * Gained a lot of confidence with React hooks
+ * Succesfully changed the MVP midway through and acheived the updated MVP
 #### Challenges:
- * Pivoting MVP structure midway through
- * Working with socket io (Before Pivot)
+ * Pivoting MVP structure midway through / Working with socket io (Before Pivot)
+ * Implementing useEffect correctly
+ * Relearning LocalStorage
 
 ## Overview of Site:
-##### Trivia-app is a web app that allows a user to:
+##### Trivia Fanatics is a web app that allows a trivia FANATIC to:
   * Generate a set of trivia questions from filter parameters
   * Play a single player trivia game with those generated questions
   * See their score for, the current round, current game, and past games
-  * Play multiple rounds in a row with the same filter parameters 
+  * Play multiple rounds in a row with the same filter parameters to improve on their weaker categories
+  * When playing multiple rounds, a player will only see a question again if they got it wrong the first time
 
 ### Screenshots / Screen Recordings
 #### Lobby Homepage:
-![]()
-![]()
+![](./public/lobby.png)
 
 #### In Game page:
-![]()
+![](./public/ingame.png)
 
 #### End Game page:
-![]()
+![](./public/endgame.png)
 
 ### Technologies Used:
 * ![React](https://camo.githubusercontent.com/4e4a3b5c3e9c00501ec866e2f2466c5a6032f838aca5f2cf3b14450e39e8a2f0/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f72656163742532302d2532333230323332612e7376673f267374796c653d666f722d7468652d6261646765266c6f676f3d7265616374266c6f676f436f6c6f723d253233363144414642)
@@ -54,11 +56,11 @@
 ## Setup
 * To access the site on your local machine:
   * Clone down the repo through the command line
-  * Run ```$npm install``` to install dependencies
-  * Run ```$npm start``` to open the page on a local browser
+  * Run `$npm install` to install dependencies
+  * Run `$npm start` to open the page on a local browser
 * Otherwise the site is deployed and accessible [here]() 
 
 ## Running Tests
 * After completing the setup steps above:
-  * Run ```$npx cypress open``` to open up the test suite
+  * Run `$npx cypress open` to open up the test suite
   * From there click on the `trivia-test` file to open it in your browser and watch the tests run automatically
