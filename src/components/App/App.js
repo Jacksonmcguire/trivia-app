@@ -35,7 +35,7 @@ const App = () => {
     })
   }  
   const clearHistory = () => {
-    localStorage.clear()
+    localStorage.removeItem('scores')
     setTotalStats([]) 
   }
 

@@ -27,8 +27,12 @@ export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
   }
 
   useEffect(() => {
+    let startedRound = false;
     slides.forEach(slide => {
-      determineRepeats(slide)
+      if (gameStats.correctQuestions.includes(slide.question) && startedRound === false) {
+        determineRepeats(slide)
+        startedRound = true;
+      } else return;
     });
   }, [slides])
 
@@ -64,6 +68,7 @@ export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
 
   const determineRepeats = (currentQ) => {
     if (currentQ && gameStats.correctQuestions.includes(currentQ.question)) {
+      console.log('new round')
       newRound(0)
     } else return true
   }
