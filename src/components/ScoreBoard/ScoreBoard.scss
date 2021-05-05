@@ -1,0 +1,52 @@
+.score-board {
+  display: flex;
+  flex-flow: column;
+  background-color: #3D5A80;
+  width: 50%;
+  margin: 2em;
+  border-radius: 10px;
+  height: 23.5em;
+  padding: 1em;
+  button {
+    align-self: center;
+    display: flex;
+    background-color: transparent;
+    border: 1px solid #E0FBFC;
+    border-radius: 5px;
+    padding: 5px;
+    svg {
+      height: 1em;
+      width: 1em;
+    }
+  }
+  div {
+    width: 80%;
+    align-self: center;
+    padding: 1em;
+    border-radius: 10px;
+    overflow-y: scroll;
+    height: 50%;
+    background-color: #91cccc4b;
+  }
+  button[aria-expanded="true"] {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  a {
+    align-self: flex-start;
+    position: fixed;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .score-board {
+    width: 100%;
+    margin: .2em;
+    height: 97%;
+    a {
+      margin-top: 1em;
+      position: relative;
+    }
+  }
+}

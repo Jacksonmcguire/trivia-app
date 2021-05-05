@@ -1,8 +1,9 @@
 import './QuestionSlide.scss'
 import { useState } from 'react'
 import { decodeHTML } from '../../utilities'
+import { array, func, string } from 'prop-types'
 
-export const QuestionSlide = ({category, incorrectAnswers, correct, question, type, evaluateAnswer}) => {
+export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAnswer}) => {
 
   const [answer, setAnswer] = useState('')
 
@@ -12,7 +13,7 @@ export const QuestionSlide = ({category, incorrectAnswers, correct, question, ty
       incorrectAnswers.splice(randomIndex, 0, correct);
     }
     return incorrectAnswers.map((answer, index) => {
-      return <div className="option">
+      return <div className="option" key={index}>
       <input type="checkbox" id={'opt' + index + 1} name="option"/>
       <label htmlFor={'opt' + index + 1}>{decodeHTML(answer)}</label>
       </div>
@@ -22,7 +23,8 @@ export const QuestionSlide = ({category, incorrectAnswers, correct, question, ty
 
   const answerQuestion = (e) => {
     e.preventDefault()
-    if (answer !== '') evaluateAnswer(decodeHTML(correct), answer)
+    if (answer !== '') {
+      evaluateAnswer(decodeHTML(correct), answer, question)}
     clearInputs()
   }
 
@@ -46,4 +48,11 @@ export const QuestionSlide = ({category, incorrectAnswers, correct, question, ty
       <button onClick={answerQuestion}>Submit Answer</button>
     </form>
   )
+}
+
+QuestionSlide.propTypes = {
+  incorrectAnswers: array.isRequired, 
+  correct: string.isRequired, 
+  question: string.isRequired, 
+  evaluateAnswer: func.isRequired
 }

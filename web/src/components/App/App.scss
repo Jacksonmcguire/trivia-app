@@ -1,10 +1,12 @@
 * {
   color: #E0FBFC;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
 }
 
 .App, body, html, #root {
   height: 100%;
-  background-color: #293241;
+  background-color: #E0FBFC;
 }
 
 .App {
@@ -27,7 +29,6 @@ button {
 }
 
 header {
-  background-color: #3D5A80;
   height: 15%;
   top: 0;
   display: flex;

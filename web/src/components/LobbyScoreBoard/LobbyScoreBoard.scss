@@ -1,0 +1,59 @@
+.lobby-questions {
+  display: flex;
+  flex-flow: column;
+  font-size: 1.1em;
+  overflow-y: scroll;
+  background-color: #91cccc4b;
+  margin: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  width: 50%;
+}
+
+.popover-panel {
+  display: flex;
+  height: 10em;
+  position: sticky;
+  background-color: #3D5A80;
+  border-radius: 5px;
+  box-shadow: 0 0 15px #91cccc4b;
+  width: 90%;
+  margin: 0;
+}
+
+.lobby-score {
+  align-self: center;
+  display: flex;
+  flex-flow: column nowrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 1em;
+  padding: 1em;
+  background-color: #3D5A80;
+  border-radius: 3px;
+  color: #E0FBFC;
+  font-weight: 800;
+  width: 90%;
+  height: 100%;
+  button {
+    align-self: center;
+    border-radius: 3px;
+    border: none;
+    margin: 5px;
+    color: #E0FBFC;
+    width: 50%;
+    font-size: 1.5em;
+    padding: 5px;
+    background-color: #293241;
+    svg {
+      float: right;
+      height: 1em;
+      width: 1em;
+    }
+  }
+  button[aria-expanded="true"] {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}

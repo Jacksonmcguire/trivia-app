@@ -1,0 +1,13 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "category": "Entertainment: Film",
+      "correct_answer": "Quentin Tarantino",
+      "difficulty": "easy",
+      "incorrect_answers": ["Martin Scorcese", "Steven Spielberg", "James Cameron", "Quentin Tarantino"],
+      "question": "Who directed the movies &quot;Pulp Fiction&quot;, &quot;Reservoir Dogs&quot; and &quot;Django Unchained&quot;?",
+      "type": "multiple"
+    }
+  ]
+}
