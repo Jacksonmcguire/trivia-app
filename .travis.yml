@@ -6,7 +6,8 @@ notifications:
 
 install: 
   - npm i
-
+before_install:
+  - npm i -g npm
 script: 
   -npm test
   -npm run build
