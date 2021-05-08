@@ -16,13 +16,15 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "start-server-and-test": "^1.12.1",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "cypress open",
-    "eject": "react-scripts eject"
+    "test": "start-server-and-test start http://localhost:3000 cypress",
+    "eject": "react-scripts eject",
+    "cypress": "cypress run"
   },
   "eslintConfig": {
     "extends": [
