@@ -3,10 +3,9 @@ node_js:
   - "node"
 notifications:
   email: false
-"os": ["mac"]
 
 install: 
-  - npm ci
+  - npm i
 
 script: 
   -npm test
