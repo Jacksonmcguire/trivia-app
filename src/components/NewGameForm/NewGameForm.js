@@ -1,7 +1,8 @@
 import './NewGameForm.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types';
+import { socket } from '../App/App'
+
 export class NewGameForm extends React.Component {
 
   constructor() {
@@ -11,6 +12,7 @@ export class NewGameForm extends React.Component {
       category: '',
       amount: 10,
       type: '',
+      room: '',
     }
   }
 
@@ -29,11 +31,13 @@ export class NewGameForm extends React.Component {
   fetchTriviaSet = () => {
     let fetchUrl = '';
     Object.keys(this.state).forEach((prop, index) => {
-      if (this.state[prop] !== '' && index !== 0) {
+      if (this.state[prop] !== '' && index !== 0 && prop !== 'room') {
         fetchUrl += `&${prop + '=' + this.state[prop]}`
       }
-      else if (this.state[prop] !== '' && index === 0) {
+      else if (this.state[prop] !== '' && index === 0 && prop !== 'room') {
         fetchUrl = `${prop + '=' + this.state[prop]}`
+      } else if (prop === 'room') {
+        socket.emit('create game', this.state[prop])
       }
     })
     this.props.generateSlideDeck(fetchUrl)
@@ -54,22 +58,18 @@ export class NewGameForm extends React.Component {
         <option>Category</option>
         {this.categoryOptions()}
       </select>
-      <input type="number" name="amount" placeholder="Number of Slides" required min="1"/>
+      <input type="number" name="amount" placeholder="Number of Slides" required/>
       <div>
       <input type="radio" name="type" id="boolean"/>
       <label htmlFor="boolean">True / False</label>
       <input type="radio" name="type" id="multiple"/>
       <label htmlFor="multiple">Multiple Choice</label>
       </div>
+      <input name="room" placeholder="Room Name"/>
       <Link to="/play" onClick={() => this.fetchTriviaSet()}>
       <button>Start</button>
       </Link>
     </form>
   )
   }
-}
-
-NewGameForm.propTypes = {
-  generateSlideDeck: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired
 }

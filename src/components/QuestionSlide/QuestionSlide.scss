@@ -8,47 +8,31 @@
     width: 20%;
     border-radius: 10px;
     align-self: center;
-    margin-top: 2em;
+    margin-bottom: 1em;
     font-size: 1.3em; 
   }
-  width: 50%;
+  width: 40em;
   border-radius: 10px;
   margin: 2em;
-  height: 50%;
-  padding-bottom: 1em;
 }
 
 .option {
   display: flex;
   background-color: #293241;
-  margin: 5px;
+  margin: 10px;
+  padding: 5px;
   width: 80%;
   align-self: center;
-  padding: 10px;
   input[type="checkbox"] {
     display:list-item;
-    transform: scale(2.3);
+    transform: scale(2);
     color: #3D5A80;
+    margin: .5em;
     color: black;
   }
   label {
-    display: inline-block;
+    background-color: #293241;
     width: 100%;
     font-size: 1.4em;
-    font-weight: 700;
-  }
-}
-
-@media screen and (max-width: 1000px) {
-  main {
-    height: 60%;
-  }
-  .current-q {
-    width: 100%;
-    margin: .2em;
-    height: 100%;
-    button {
-      width: 100%;;
-    }
   }
 }
