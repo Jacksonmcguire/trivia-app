@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
 import {Chat} from '../Chat/Chat'
 import {socket} from '../App/App'
-let player;
+import { HostView } from '../HostView/HostView'
 
 export const InGame = ({slideDeck, updateGames}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -13,45 +13,48 @@ export const InGame = ({slideDeck, updateGames}) => {
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
   const [slides, setSlides] = useState(slideDeck)
   const [room, setRoom] = useState('')
-
+  const [host, setHost] = useState('')
+  const [hostView, setHostView] = useState(false)
+  const [hostData, setHostData] = useState({})
+  console.log(socket.id)
   useEffect(() => {
-    socket.on('new game', (room) => {
+    
+    socket.on('new game', ({room, host}) => {
       setRoom(room)
-
-      // console.log(room, slideDeck)
-      // console.log('new in the room:', name)
-      // if (socket.id === host) {
+      setHost(host)
+      if (socket.id === host) setHostView(true); setHostData({room: room, host: host, slideDeck: slideDeck, players: []})
       if (slideDeck.length) {
 
         socket.emit('submit slides', {slideDeck: slideDeck, room: room})
         setSlides(slideDeck)
       } 
-      // }
     })
 
+    socket.on('update score', (manager) => {
+      if (hostView) {
+        setHostData(manager.games.find(game => game.room === room))
+      } 
+    }) 
+
     socket.on('new player', ({ manager, slides, room }) => {
-      console.log('hello')
       if (manager.games) {
 
         updateGames(manager.games)
       } 
+      if (hostView) {
+        const game = manager.games.find(game => game.room === room)
+        game && setHostData(game)
+
+      }
       setSlides(slides)
       setRoom(room)
     })
-
-
-    // socket.on('slides submitted', (manager) => {
-    //   // console.log(manager.games)
-    //   updateGames(manager.games)
-    // })
-
   })
 
   const questionSlides = () => {
     console.log(slides)
     if (slides.length) {
       const slideCards = slides.map(question => {
-        // console.log(question)
         return (
           <QuestionSlide
           category={question.category}
@@ -79,12 +82,13 @@ export const InGame = ({slideDeck, updateGames}) => {
     setCurrentQuestion(currentQuestion + 1)
 
   }
-      
+
   return (
     <main className="in-game">
-      {questionSlides()}
-      {/* <ScoreBoard question={currentQuestion} score={score}/> */}
-      {/* <Chat></Chat> */}
+      {
+        !hostView ? questionSlides() : <HostView slideDeck={hostData.slideDeck} players={hostData.players}/>
+      // {/* <Chat></Chat> */}
+      }
     </main>
   )
 }
