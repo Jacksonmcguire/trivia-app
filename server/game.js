@@ -1,0 +1,27 @@
+module.exports = class Game {
+  constructor(host, room) {
+    this.host = host;
+    this.room = room;
+    this.slideDeck = [];
+    this.players = [];
+  }
+
+  playerJoin({name, id}) {
+    if (!this.players.find(player => player.id === id)) {
+      
+      this.players.push({name, incorrect: 0, correct: 0, id})
+    }
+  }
+
+  answerQuestion(id, accuracy) {
+    let player = this.players.find(player => player.id === id)
+    if (player !== undefined) accuracy ? player.correct ++ : player.incorrect ++;
+    console.log('player' + player)
+  }
+
+  setSlides(slides) {
+    this.slideDeck = slides
+  }
+
+
+}
