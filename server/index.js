@@ -1,3 +1,4 @@
+const GameManager = require('./gameManager')
 const app = require('express')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http, {
@@ -5,6 +6,8 @@ const io = require('socket.io')(http, {
     origin: "*",
   }
 })
+let manager = new GameManager()
+
 
 io.on('connection', socket => {
 
@@ -14,22 +17,56 @@ io.on('connection', socket => {
     io.emit('message', {name, message})
   })
 
-  socket.on('create game', roomName => {
+  socket.on('create game', (roomName) => {
     socket.join(roomName)
     console.log(roomName)
+    manager.newGame(roomName, socket.id)
+    // console.log(manager)
     io.to(roomName).emit('new game', roomName)
+    // console.log(manager)
+  })
+
+  socket.on('submit slides', ({slideDeck, room}) => {
+    // console.log('room:' + room)
+    let game = manager.games.findIndex(game => game.room === room)
+    // console.log('game' + game)
+    manager.games[game].setSlides(slideDeck)
+    io.emit('add game', manager)
+
+    // io.to(room).emit('slides submitted', manager)
   })
 
   socket.on('join game', ({room, name}) => {
-    console.log(room, 'joined', name)
+    // console.log(name, 'joined', room)
+    socket.join(room)
+    // if (manager.room === room) 
+    let game = manager.games.findIndex(game => game.room === room)
+    // console.log(game)
+    game > -1 && manager.games[game].playerJoin({name: name, id: socket.id})
+    io.to(room).emit('new player', { slides: manager.games[game].slideDeck, manager: manager, room: room})
+  })
+  
+
+  socket.on('correct answer', (room) => {
+    let game = manager.games.findIndex(game => game.room === room)
+
+    // manager.games.find(game => game.room === room)
+    // console.log(socket.room)
+    // console.log('correct', answer)
+    
+    manager.games[game].answerQuestion(socket.id, true)
+    console.log(manager.games[game].players)
   })
 
-  socket.on('correct answer', (answer) => {
-    console.log('correct', answer)
-  })
+  socket.on('wrong answer', (room) => {
+    let game = manager.games.findIndex(game => game.room === room)
 
-  socket.on('wrong answer', (answer) => {
-    console.log('incorrect', answer)
+    // manager.games.find(game => game.room === room)
+    // console.log('correct', answer)
+    
+    manager.games[game].answerQuestion(socket.id, false)
+    console.log(manager.games[game].players)
+    io.emit('update score', manager)
   })
 })
 

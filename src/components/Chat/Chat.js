@@ -1,6 +1,7 @@
 import TextField from "@material-ui/core/TextField"
 import React, { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
+import './Chat.scss'
 
 export function Chat() {
 	const [ state, setState ] = useState({ message: "", name: "" })
@@ -33,7 +34,7 @@ export function Chat() {
 	const renderChat = () => {
 		return chat.map(({ name, message }, index) => (
 			<div key={index}>
-				<h3>
+				<h3 className="chat-msg">
 					{name}: <span>{message}</span>
 				</h3>
 			</div>

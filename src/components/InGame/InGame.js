@@ -5,25 +5,52 @@ import { useState, useEffect, useRef } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
 import {Chat} from '../Chat/Chat'
 import {socket} from '../App/App'
+let player;
 
-export const InGame = ({slideDeck}) => {
+export const InGame = ({slideDeck, updateGames}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
-  
+  const [slides, setSlides] = useState(slideDeck)
+  const [room, setRoom] = useState('')
 
   useEffect(() => {
-    socket.on('new game', (roomName) => {
-      console.log('new game in room:', roomName)
+    socket.on('new game', (room) => {
+      setRoom(room)
+
+      // console.log(room, slideDeck)
+      // console.log('new in the room:', name)
+      // if (socket.id === host) {
+      if (slideDeck.length) {
+
+        socket.emit('submit slides', {slideDeck: slideDeck, room: room})
+        setSlides(slideDeck)
+      } 
+      // }
     })
 
-    socket.on('answer received')
+    socket.on('new player', ({ manager, slides, room }) => {
+      console.log('hello')
+      if (manager.games) {
+
+        updateGames(manager.games)
+      } 
+      setSlides(slides)
+      setRoom(room)
+    })
+
+
+    // socket.on('slides submitted', (manager) => {
+    //   // console.log(manager.games)
+    //   updateGames(manager.games)
+    // })
 
   })
 
   const questionSlides = () => {
-    if (slideDeck.length) {
-      const slideCards = slideDeck.map(question => {
+    console.log(slides)
+    if (slides.length) {
+      const slideCards = slides.map(question => {
         // console.log(question)
         return (
           <QuestionSlide
@@ -44,10 +71,10 @@ export const InGame = ({slideDeck}) => {
   const evaluateAnswer = (correct, answer) => {
     if (answer === correct) {
       setScore(score + 1)
-      socket.emit('correct answer', correct)
+      socket.emit('correct answer', room)
     } else {
       setIncorrectAnswers([...incorrectAnswers, answer])
-      socket.emit('wrong answer', answer)
+      socket.emit('wrong answer', room)
     }
     setCurrentQuestion(currentQuestion + 1)
 
@@ -56,8 +83,8 @@ export const InGame = ({slideDeck}) => {
   return (
     <main className="in-game">
       {questionSlides()}
-      <ScoreBoard question={currentQuestion} score={score}/>
-      <Chat></Chat>
+      {/* <ScoreBoard question={currentQuestion} score={score}/> */}
+      {/* <Chat></Chat> */}
     </main>
   )
 }

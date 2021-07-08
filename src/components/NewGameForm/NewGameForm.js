@@ -28,7 +28,7 @@ export class NewGameForm extends React.Component {
     } else this.setState({...this.state, [e.target.name]: e.target.id})
   } 
 
-  fetchTriviaSet = () => {
+  fetchTriviaSet = async () => {
     let fetchUrl = '';
     Object.keys(this.state).forEach((prop, index) => {
       if (this.state[prop] !== '' && index !== 0 && prop !== 'room') {
@@ -36,11 +36,12 @@ export class NewGameForm extends React.Component {
       }
       else if (this.state[prop] !== '' && index === 0 && prop !== 'room') {
         fetchUrl = `${prop + '=' + this.state[prop]}`
-      } else if (prop === 'room') {
-        socket.emit('create game', this.state[prop])
-      }
+      } 
     })
-    this.props.generateSlideDeck(fetchUrl)
+    await this.props.generateSlideDeck(fetchUrl, this.state.room)
+
+    socket.emit('create game', this.state['room'])
+
   }
 
 
