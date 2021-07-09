@@ -1,5 +1,11 @@
 .in-game {
   display: flex;
+  justify-content: center;
+}
+
+.player-view {
+  display: flex;
+  justify-content: space-around;
 }
 
 @media screen and (max-width: 500px) {

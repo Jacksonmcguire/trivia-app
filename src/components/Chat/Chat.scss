@@ -1,6 +1,9 @@
 
 .card {
   align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   background-color: #3D5A80;
   width: 50%;
   margin-left: 10em;

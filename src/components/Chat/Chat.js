@@ -34,9 +34,9 @@ export function Chat({socket, room}) {
 	const renderChat = () => {
 		return chat.map(({ name, message }, index) => (
 			<div key={index}>
-				<h3 className="chat-msg">
+				<h4 className="chat-msg">
 					{name}: <span>{message}</span>
-				</h3>
+				</h4>
 			</div>
 		))
 	}
