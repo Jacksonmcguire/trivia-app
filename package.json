@@ -9,7 +9,9 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "concurrently": "^6.2.0",
     "node-sass": "^5.0.0",
+    "nodemon": "2.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
@@ -19,7 +21,7 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"cd server && npm run start\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "cypress open",
     "eject": "react-scripts eject"
