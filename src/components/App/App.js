@@ -31,8 +31,9 @@ class App extends React.Component {
         this.setState({games: manager.games})
       }
       socket.on('update score', (manager) => {
+        console.log(manager)
         if (this.state.games !== manager.games) {
-
+    
         this.setState({games: manager.games})
         }
       })
@@ -41,10 +42,10 @@ class App extends React.Component {
   }
 
   generateSlideDeck = async (str, room) => {
-    await getChosenDeck(str)
-    .then(data => {
-      this.setState({activeSlides: data.results})
-  })
+      await getChosenDeck(str)
+      .then(data => {
+        this.setState({activeSlides: data.results})
+      })
   } 
   
   render() {
@@ -52,8 +53,8 @@ class App extends React.Component {
       <div className="App">
         <header>Trivia App</header>
         <Switch>
-        <Route exact path='/'><Lobby activeSlides={this.state.activeSlides} generateSlideDeck={this.generateSlideDeck}/></Route>
-        <Route exact path='/play'><InGame slideDeck={this.state.activeSlides} updateGames={this.updateGames}/></Route>
+        <Route exact path='/'><Lobby activeSlides={this.state.activeSlides} generateSlideDeck={this.generateSlideDeck} stats={this.state.games}/></Route>
+        <Route exact path='/play'><InGame slideDeck={this.state.activeSlides} updateGames={this.updateGames} stats={this.state.games}/></Route>
         </Switch>
       </div>
     );

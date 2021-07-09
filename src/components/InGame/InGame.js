@@ -7,7 +7,7 @@ import {Chat} from '../Chat/Chat'
 import {socket} from '../App/App'
 import { HostView } from '../HostView/HostView'
 
-export const InGame = ({slideDeck, updateGames}) => {
+export const InGame = ({slideDeck, updateGames, stats}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
@@ -16,6 +16,8 @@ export const InGame = ({slideDeck, updateGames}) => {
   const [host, setHost] = useState('')
   const [hostView, setHostView] = useState(false)
   const [hostData, setHostData] = useState({})
+  const [error, setError] = useState(false)
+
   console.log(socket.id)
   useEffect(() => {
     
@@ -24,16 +26,31 @@ export const InGame = ({slideDeck, updateGames}) => {
       setHost(host)
       if (socket.id === host) setHostView(true); setHostData({room: room, host: host, slideDeck: slideDeck, players: []})
       if (slideDeck.length) {
-
+        setError(false)
         socket.emit('submit slides', {slideDeck: slideDeck, room: room})
         setSlides(slideDeck)
       } 
     })
 
+    socket.on('duplicate room', ({room, id}) => {
+      if (id === socket.id && error === false) {
+        window.location.pathname = ''
+        setError(true)
+        alert(`${room} is already in use, please pick a more unique name.`)
+      }
+    })
+
+    socket.on('failed join', ({room, id}) => {
+      if (id === socket.id && error === false) {
+        window.location.pathname = ''
+        setError(true)
+        alert(`We cant find the room: ${room}.`)
+      }
+    })
+
     socket.on('update score', ({manager, room}) => {
-      if (hostView) {
         setHostData(manager.games.find(game => game.room === room))
-      } else setRoom(room)
+        setRoom(room);
     }) 
 
     socket.on('new player', ({ manager, slides, room }) => {
@@ -48,6 +65,7 @@ export const InGame = ({slideDeck, updateGames}) => {
       }
       setSlides(slides)
       setRoom(room)
+      setError(false)
     })
   })
 
@@ -67,8 +85,13 @@ export const InGame = ({slideDeck, updateGames}) => {
           />
           )
         })
-      return slideCards[currentQuestion]? slideCards[currentQuestion] : <EndSlide slideCards={slideDeck} score={score}/>
+        
+      return slideCards[currentQuestion]? slideCards[currentQuestion] : <EndSlide score={hostData} leaveRoom={leaveRoom}/>
       } else return <div>sorry</div>
+  }
+
+  const leaveRoom = () => {
+    socket.emit('leaving player', room)
   }
 
   const evaluateAnswer = (correct, answer) => {

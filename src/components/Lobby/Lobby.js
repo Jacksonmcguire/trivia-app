@@ -27,7 +27,10 @@ export class Lobby extends Component {
   render() {return (
     <main className="lobby">
       <JoinGameForm/>
-      <NewGameForm activeSlides={this.state.activeSlides} categories={this.state.categories} generateSlideDeck={this.props.generateSlideDeck}/>
+      <NewGameForm activeSlides={this.state.activeSlides} 
+      categories={this.state.categories} 
+      generateSlideDeck={this.props.generateSlideDeck}
+      stats={this.props.stats}/>
       {/* <SlideGallery slideDecks={this.state.randomSets}/> */}
     </main>
   )}

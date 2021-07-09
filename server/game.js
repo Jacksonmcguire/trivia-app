@@ -14,6 +14,11 @@ module.exports = class Game {
     }
   }
 
+  playerLeave(id) {
+    const index = this.players.findIndex(player => player.id === id)
+    this.players.splice(index, 1)
+  }
+
   answerQuestion(id, accuracy) {
     let player = this.players.find(player => player.id === id)
     if (player !== undefined) accuracy ? player.correct ++ : player.incorrect ++;

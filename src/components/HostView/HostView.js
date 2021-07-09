@@ -1,7 +1,8 @@
 import { decodeHTML } from '../../utilities'
 import { BiBadgeCheck, BiX } from 'react-icons/bi'
+import { Chat } from '../Chat/Chat'
 import './HostView.scss'
-export const HostView = ({room, slideDeck, players}) => {
+export const HostView = ({room, slideDeck, players, socket}) => {
   const questions = <ul className="questions"><h3>Questions</h3>
   {slideDeck && slideDeck.map((slide, index) => {
     return <li>
@@ -34,7 +35,8 @@ export const HostView = ({room, slideDeck, players}) => {
 
         {questions}
       </div>
-      <div>Players
+      <Chat room={room} socket={socket}></Chat>
+      <div>
 
       {playerScores}
       </div>

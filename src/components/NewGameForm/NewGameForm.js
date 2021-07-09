@@ -39,10 +39,27 @@ export class NewGameForm extends React.Component {
       } 
     })
     await this.props.generateSlideDeck(fetchUrl, this.state.room)
-
-    socket.emit('create game', this.state['room'])
+    if (this.checkRooms()) {
+      // window.location.pathname = '/play'
+      socket.emit('create game', this.state['room'])
+    } else {
+      window.location.pathname = ''
+    }
 
   }
+
+  checkRooms = () => {
+      if (this.state.room === '') {
+        return false
+      } else {
+
+        const duplicate = this.props.stats.find(game => game.room === this.state['room'])
+        console.log(this.props.stats)
+        if (!duplicate) {
+          return true
+        } else return false
+      }
+    }
 
 
   render () {
@@ -66,9 +83,9 @@ export class NewGameForm extends React.Component {
       <input type="radio" name="type" id="multiple"/>
       <label htmlFor="multiple">Multiple Choice</label>
       </div>
-      <input name="room" placeholder="Room Name"/>
+      <input name="room" placeholder="Room Name" required/>
       <Link to="/play" onClick={() => this.fetchTriviaSet()}>
-      <button>Start</button>
+        <button>Start</button>
       </Link>
     </form>
   )
