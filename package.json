@@ -21,7 +21,7 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "concurrently \"cd server && npm run start\" \"react-scripts start\"",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "cypress open",
     "eject": "react-scripts eject"
