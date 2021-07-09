@@ -3,32 +3,32 @@ import React, { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
 import './Chat.scss'
 
-export function Chat() {
-	const [ state, setState ] = useState({ message: "", name: "" })
+export function Chat({socket, room}) {
+	const [ message, setMessage ] = useState("")
 	const [ chat, setChat ] = useState([])
 
-	const socketRef = useRef()
 
 	useEffect(
 		() => {
-			socketRef.current = io.connect("http://localhost:4000")
-			socketRef.current.on("message", ({ name, message }) => {
+			socket.on("new message", ({ name, message }) => {
 				setChat([ ...chat, { name, message } ])
+				console.log(name, message)
+				const chatBox = document.querySelector('.render-chat')
+				chatBox.scrollTop = chatBox.scrollHeight
 			})
-			return () => socketRef.current.disconnect()
 		},
-		[ chat ]
+		[ chat, socket ]
 	)
 
 	const onTextChange = (e) => {
-		setState({ ...state, [e.target.name]: e.target.value })
+		setMessage(e.target.value)
 	}
 
 	const onMessageSubmit = (e) => {
-		const { name, message } = state
-		socketRef.current.emit("message", { name, message })
+		console.log(room)
+		socket.emit("message", { message: message, id: socket.id, room: room })
 		e.preventDefault()
-		setState({ message: "", name })
+		setMessage("")
 	}
 
 	const renderChat = () => {
@@ -43,27 +43,20 @@ export function Chat() {
 
 	return (
 		<div className="card">
-			<form onSubmit={onMessageSubmit}>
-				<h1>Messenger</h1>
-				<div className="name-field">
-					<TextField name="name" onChange={(e) => onTextChange(e)} value={state.name} label="Name" />
-				</div>
-				<div>
-					<TextField
-						name="message"
-						onChange={(e) => onTextChange(e)}
-						value={state.message}
-						id="outlined-multiline-static"
-						variant="outlined"
-						label="Message"
-					/>
-				</div>
-				<button>Send Message</button>
-			</form>
 			<div className="render-chat">
-				<h1>Chat Log</h1>
 				{renderChat()}
 			</div>
+			<form onSubmit={onMessageSubmit}>
+				<div>
+					<input
+						name="message"
+						placeholder="Send a message"
+						onChange={(e) => onTextChange(e)}
+						value={message}
+					/>
+				</div>
+			</form>
+			
 		</div>
 	)
 }

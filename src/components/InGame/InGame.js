@@ -30,10 +30,10 @@ export const InGame = ({slideDeck, updateGames}) => {
       } 
     })
 
-    socket.on('update score', (manager) => {
+    socket.on('update score', ({manager, room}) => {
       if (hostView) {
         setHostData(manager.games.find(game => game.room === room))
-      } 
+      } else setRoom(room)
     }) 
 
     socket.on('new player', ({ manager, slides, room }) => {
@@ -86,8 +86,7 @@ export const InGame = ({slideDeck, updateGames}) => {
   return (
     <main className="in-game">
       {
-        !hostView ? questionSlides() : <HostView slideDeck={hostData.slideDeck} players={hostData.players}/>
-      // {/* <Chat></Chat> */}
+        !hostView ? <section>{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room}/>
       }
     </main>
   )

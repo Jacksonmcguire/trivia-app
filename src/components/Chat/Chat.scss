@@ -1,6 +1,19 @@
-.chat-msg {
-  color: black;
-  span {
-    color: black
+
+.card {
+  align-self: center;
+  background-color: #3D5A80;
+  width: 50%;
+  margin-left: 10em;
+  padding-bottom: 50px;
+  border-radius: 10px;
+  input {
+    padding: 10px;
+    font-size: 1.3em;
   }
+}
+
+.render-chat {
+  height: 20em;
+  overflow-y: scroll;
+  font-size: 1.1em;
 }
