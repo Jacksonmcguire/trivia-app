@@ -1,26 +1,30 @@
 .join-game {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   border-radius: 3px;
-  height: 20%;
-  margin: 1em;
+  flex-flow: column;
+  height: 100%;
+  margin: 0;
+  font-size: 1.8em;
   background-color: #3D5A80;
-  padding: 1.1em;
-  color: #293241;
-  font-weight: 800;
+  padding: 0 1.1em;
+  color: #E0FBFC;
+  font-weight: 900;
   top: 0;
-  width: 85%;
+  border-right: 5px solid;
+  // width: 85%;
   input, button {
     border-radius: 3px;
     border: none;
-    color: #E0FBFC;
-    font-size: 1em;
-    background-color: #293241;
+    color: #3D5A80;
+    font-size: 1.2em;
+    background-color: #E0FBFC;
     height: 2em;
     margin-right: 5px;
     margin-left: 5px;
   }
   button {
     border: 1px solid #E0FBFC;
+    width: 50%;
   }
 }

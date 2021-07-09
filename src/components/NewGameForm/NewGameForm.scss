@@ -1,9 +1,11 @@
 .new-game {
-  align-self: center;
+  // align-self: center;
+  height: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin: 1em 1em 0 0;
-  padding: 2em;
+  justify-content: space-around;
+  // margin: 1em 1em 0 0;
+  padding: 0 2em;
   background-color: #3D5A80;
   border-radius: 3px;
   color: #E0FBFC;
@@ -13,9 +15,9 @@
     border-radius: 3px;
     border: none;
     margin-top: 5px;
-    color: #E0FBFC;
+    color: #3D5A80;
     font-size: 1.2em;
-    background-color: #293241;
+    background-color: #E0FBFC;
   }
   label {
     margin: 10px;
@@ -30,7 +32,7 @@
   button {
     width: 70%;
     padding: 10px;
-    border: 1px solid #E0FBFC;
+    border: 1px solid;
   }
   input[type="number"] {
     width: 35%;
