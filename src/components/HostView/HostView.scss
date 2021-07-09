@@ -1,15 +1,32 @@
 .host {
   * {
-    // color: black;
     list-style-type: none;
   }
-  display: flex;
-  // justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   
+  .card {
+    height: 40vh;
+    justify-self: center;
+    h4 {
+      color: #E0FBFC;
+      font-size: 1.3em;
+    }
+    margin: 0;
+
+  }
+  h3 {
+    color: #3D5A80;
+    font-size: 2em;
+    border-bottom: 1px solid;
+    padding-bottom: 5px;
+
+  }
 }
 
 .questions {
-  width: 50%;
+  height: 50vh;
+  overflow-y: scroll;
   border-radius: 10px;
   h3 {
     font-size: 2em;
@@ -46,27 +63,20 @@
 }
 
 .players {
-  // width: 100%;
-  h3 {
-    color: #3D5A80;
-    // margin-top: 10px;
-    font-size: 2em;
-    border-bottom: 1px solid;
-    padding-bottom: 5px;
+  height: 50vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-flow: row wrap;
 
-  }
+  width: 100%;
+
 }
 
 .end-game {
-  background-color: black;
+  background-color: #3D5A80;
   font-size: 3em;
   position: absolute;
   margin-left: 100px;
-  // align-self: flex-end;
-  svg {
-    // backgroundcolor: black
-  }
-
 }
 
 .player-scores {
