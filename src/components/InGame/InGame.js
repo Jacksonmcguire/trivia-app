@@ -115,7 +115,7 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
   return (
     <main className="in-game">
       {
-        !hostView ? <section>{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room} endGame={endGame}/>
+        !hostView ? <section className="player-view">{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room} endGame={endGame}/>
       }
     </main>
   )

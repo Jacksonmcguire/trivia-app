@@ -5,14 +5,14 @@ import './HostView.scss'
 export const HostView = ({room, slideDeck, players, socket, endGame}) => {
   const questions = <ul className="questions"><h3>Questions</h3>
   {slideDeck && slideDeck.map((slide, index) => {
-    return <li>
-      <p>{index + 1}</p>
+    return <li key={slide.question}>
+      <p>{index + 1}.</p>
       <p>{decodeHTML(slide.question)}</p>
       <p>{decodeHTML(slide.correct_answer)}</p>
     </li>
   })}</ul>
 
-  const playerScores = <section className="players"><h3>Players</h3>
+  const playerScores = <div><h3>Players</h3><section className="players">
     {players && players.map(player => {
       return <article className="player-card">
         <h4>{player.name}</h4>
@@ -29,18 +29,16 @@ export const HostView = ({room, slideDeck, players, socket, endGame}) => {
       </article>
     })}
   </section>
+  </div>
+
   return (
     <section className="host">
       <BiX className="end-game" onClick={endGame}>End Game</BiX> 
-      <div>
 
         {questions}
-      </div>
-      <Chat room={room} socket={socket}></Chat>
-      <div>
+      <Chat room={room} socket={socket} className="host-chat"></Chat>
 
       {playerScores}
-      </div>
     </section>
   )
 }

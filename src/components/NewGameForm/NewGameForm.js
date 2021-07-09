@@ -13,6 +13,7 @@ export class NewGameForm extends React.Component {
       amount: 10,
       type: '',
       room: '',
+      name: '',
     }
   }
 
@@ -41,7 +42,7 @@ export class NewGameForm extends React.Component {
     await this.props.generateSlideDeck(fetchUrl, this.state.room)
     if (this.checkRooms()) {
       // window.location.pathname = '/play'
-      socket.emit('create game', this.state['room'])
+      socket.emit('create game', {room: this.state['room'], name: this.state['name']})
     } else {
       window.location.pathname = ''
     }
@@ -65,7 +66,7 @@ export class NewGameForm extends React.Component {
   render () {
     return (
     <form className="new-game"
-    onChange={(e) => this.handleChange(e)}>New Game
+    onChange={(e) => this.handleChange(e)}>Host Game
       <select name="difficulty">
         <option>Difficulty</option>
         <option>Easy</option>
@@ -76,14 +77,18 @@ export class NewGameForm extends React.Component {
         <option>Category</option>
         {this.categoryOptions()}
       </select>
-      <input type="number" name="amount" placeholder="Number of Slides" required/>
+      <input type="number" name="amount" placeholder="Number of Slides" required min="0"/>
       <div>
       <input type="radio" name="type" id="boolean"/>
       <label htmlFor="boolean">True / False</label>
       <input type="radio" name="type" id="multiple"/>
       <label htmlFor="multiple">Multiple Choice</label>
       </div>
-      <input name="room" placeholder="Room Name" required/>
+      <div>
+
+        <input name="room" placeholder="Room Name" required/>
+        <input name="name" placeholder="Username" required/>
+      </div>
       <Link to="/play" onClick={() => this.fetchTriviaSet()}>
         <button>Start</button>
       </Link>
