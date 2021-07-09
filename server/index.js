@@ -39,13 +39,22 @@ io.on('connection', socket => {
     let game = manager.games.findIndex(game => game.room === room)    
     manager.games[game].answerQuestion(socket.id, true)
     console.log(manager.games[game].players)
-    io.emit('update score', manager)
+    io.emit('update score', {manager: manager, room: room})
   })
 
   socket.on('wrong answer', (room) => {
     let game = manager.games.findIndex(game => game.room === room)
     manager.games[game].answerQuestion(socket.id, false)
     io.emit('update score', manager)
+  })
+
+  socket.on('message', ({message, id, room}) => {
+    let game = manager.games.findIndex(game => game.room === room)
+    if (game > -1) {
+      let player = manager.games[game].players.find(player => player.id === id)
+      manager.games[game].logChat({name: player.name, message: message})
+      io.to(room).emit('new message', {name: player.name, message: message})
+    }
   })
 })
 

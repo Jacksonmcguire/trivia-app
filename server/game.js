@@ -4,6 +4,7 @@ module.exports = class Game {
     this.room = room;
     this.slideDeck = [];
     this.players = [];
+    this.chat = [];
   }
 
   playerJoin({name, id}) {
@@ -23,5 +24,8 @@ module.exports = class Game {
     this.slideDeck = slides
   }
 
+  logChat(chat) {
+    this.chat.push(chat)
+  }
 
 }
