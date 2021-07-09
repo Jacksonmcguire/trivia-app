@@ -1,0 +1,26 @@
+.join-game {
+  display: flex;
+  justify-content: center;
+  border-radius: 3px;
+  height: 20%;
+  margin: 1em;
+  background-color: #3D5A80;
+  padding: 1.1em;
+  color: #293241;
+  font-weight: 800;
+  top: 0;
+  width: 85%;
+  input, button {
+    border-radius: 3px;
+    border: none;
+    color: #E0FBFC;
+    font-size: 1em;
+    background-color: #293241;
+    height: 2em;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  button {
+    border: 1px solid #E0FBFC;
+  }
+}

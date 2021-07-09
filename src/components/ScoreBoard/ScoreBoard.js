@@ -6,9 +6,10 @@ import { number, object } from 'prop-types'
 import { Link } from 'react-router-dom';
 
 export const ScoreBoard = ({question, score, gameScore}) => {
-  const incorrectAnswers = gameScore.incorrect.map(incorrect => <p key={incorrect.answer}>
+  const incorrectAnswers = 
+  gameScore && gameScore.incorrect.map(incorrect => <p key={incorrect.answer}>
     {decodeHTML(incorrect.question)}<br></br> You answered: {decodeHTML(incorrect.answer)}</p>)
-  return (
+  return !gameScore ? <h1>Scoreboard</h1> : (
     <div className="score-board">ScoreBoard
       <h3>Current Round: {score + '/' + question}</h3>
       <h3>This Session: {(gameScore.correct + '/' + gameScore.total)}</h3>

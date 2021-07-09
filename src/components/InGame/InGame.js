@@ -1,101 +1,116 @@
 import { QuestionSlide } from '../QuestionSlide/QuestionSlide'
 import { ScoreBoard } from '../ScoreBoard/ScoreBoard'
 import './InGame.scss'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { EndSlide } from '../EndSlide/EndSlide'
-import PropTypes from 'prop-types'
-export const InGame = ({ slides, startNewRound, gameStats, endGame}) => {
+import {Chat} from '../Chat/Chat'
+import {socket} from '../App/App'
+import { HostView } from '../HostView/HostView'
 
+export const InGame = ({slideDeck, updateGames, stats}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
-  const [correctAnswers, setCorrectAnswers] = useState([])
-  
-  const newRound = (total = slides.length) => {
-    const roundArgs = {
-      correct: score, 
-      length: total, 
-      incorrect: incorrectAnswers, 
-      correctAnswers: correctAnswers, 
-      category: slides[0].category 
-    }
-    startNewRound(roundArgs);
-    setCurrentQuestion(0)
-    setScore(0)
-    setCorrectAnswers([])
-    setIncorrectAnswers([])
-  }
+  const [slides, setSlides] = useState(slideDeck)
+  const [room, setRoom] = useState('')
+  const [host, setHost] = useState('')
+  const [hostView, setHostView] = useState(false)
+  const [hostData, setHostData] = useState({})
+  const [error, setError] = useState(false)
 
+  console.log(socket.id)
   useEffect(() => {
-    let startedRound = false;
-    slides.forEach(slide => {
-      if (gameStats.correctQuestions.includes(slide.question) && startedRound === false) {
-        determineRepeats(slide)
-        startedRound = true;
-      } else return;
-    });
-  }, [slides])
+    
+    socket.on('new game', ({room, host}) => {
+      setRoom(room)
+      setHost(host)
+      if (socket.id === host) setHostView(true); setHostData({room: room, host: host, slideDeck: slideDeck, players: []})
+      if (slideDeck.length) {
+        setError(false)
+        socket.emit('submit slides', {slideDeck: slideDeck, room: room})
+        setSlides(slideDeck)
+      } 
+    })
 
-  const updateAppState = (total = slides.length) => {
-    const roundArgs = {
-      correct: score, 
-      length: total, 
-      incorrect: incorrectAnswers, 
-      correctAnswers: correctAnswers,
-      category: slides[0].category 
-    }
-    endGame(roundArgs)
-  }
+    socket.on('duplicate room', ({room, id}) => {
+      if (id === socket.id && error === false) {
+        window.location.pathname = ''
+        setError(true)
+        alert(`${room} is already in use, please pick a more unique name.`)
+      }
+    })
+
+    socket.on('failed join', ({room, id}) => {
+      if (id === socket.id && error === false) {
+        window.location.pathname = ''
+        setError(true)
+        alert(`We cant find the room: ${room}.`)
+      }
+    })
+
+    socket.on('update score', ({manager, room}) => {
+        setHostData(manager.games.find(game => game.room === room))
+        setRoom(room);
+    }) 
+
+    socket.on('new player', ({ manager, slides, room }) => {
+      if (manager.games) {
+
+        updateGames(manager.games)
+      } 
+      if (hostView) {
+        const game = manager.games.find(game => game.room === room)
+        game && setHostData(game)
+
+      }
+      setSlides(slides)
+      setRoom(room)
+      setError(false)
+    })
+  })
 
   const questionSlides = () => {
+    console.log(slides)
     if (slides.length) {
-      const slideDeck = slides.map(question => {
+      const slideCards = slides.map(question => {
         return (
           <QuestionSlide
+          category={question.category}
           incorrectAnswers={question.incorrect_answers}
           correct={question.correct_answer}
           question={question.question}
+          type={question.type}
           evaluateAnswer={evaluateAnswer}
           key={question.question}
           />
           )
-      })
-      const currentQ = slideDeck[currentQuestion]
-      const endSlide = <EndSlide slides={slides} score={score} newRound={newRound} endGame={updateAppState}/>
-      return currentQ? currentQ : endSlide;
-    } else return <div>sorry</div>
+        })
+        
+      return slideCards[currentQuestion]? slideCards[currentQuestion] : <EndSlide score={hostData} leaveRoom={leaveRoom}/>
+      } else return <div>sorry</div>
   }
 
-  const determineRepeats = (currentQ) => {
-    if (currentQ && gameStats.correctQuestions.includes(currentQ.question)) {
-      console.log('new round')
-      newRound(0)
-    } else return true
+  const leaveRoom = () => {
+    socket.emit('leaving player', room)
   }
 
-  const evaluateAnswer = (correct, answer, question) => {
+  const evaluateAnswer = (correct, answer) => {
     if (answer === correct) {
       setScore(score + 1)
-      setCorrectAnswers([...correctAnswers, question])
+      socket.emit('correct answer', room)
     } else {
-      setIncorrectAnswers([...incorrectAnswers, {question: question, correct: correct, answer: answer}])
+      setIncorrectAnswers([...incorrectAnswers, answer])
+      socket.emit('wrong answer', room)
     }
     setCurrentQuestion(currentQuestion + 1)
+
   }
 
-      
-    return (
-      <main className="in-game">
-        {questionSlides()}
-        <ScoreBoard question={currentQuestion} score={score} gameScore={gameStats}/>
-      </main>
-    )
-  
-}
-
-InGame.propTypes = {
-   slides: PropTypes.array.isRequired, 
-   startNewRound: PropTypes.func.isRequired, 
-   gameStats: PropTypes.object.isRequired, 
-   endGame: PropTypes.func.isRequired
+  return (
+    <main className="in-game">
+      {
+        !hostView ? <section>{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room}/>
+      }
+    </main>
+  )
 }

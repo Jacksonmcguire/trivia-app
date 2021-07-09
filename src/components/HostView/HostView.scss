@@ -1,0 +1,75 @@
+.host {
+  * {
+    // color: black;
+    list-style-type: none;
+  }
+  display: flex;
+  // justify-content: space-around;
+  
+}
+
+.questions {
+  width: 50%;
+  border-radius: 10px;
+  h3 {
+    font-size: 2em;
+    font-weight: 800;
+    border-bottom: 1px solid;
+    padding-bottom: 5px;
+    text-align: center;
+    color: #3D5A80
+  }
+  li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #3D5A80;
+    color: #E0FBFC;
+    border: 1px solid #E0FBFC;
+    padding: 5px;
+    p {
+      margin: 5px
+    }
+  }
+}
+
+.player-card {
+  background-color: #3D5A80;
+  padding: 1em;
+  border: 1px solid #E0FBFC;
+  h4 {
+    font-size: 1.45em;
+  }
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+.players {
+  // width: 100%;
+  h3 {
+    color: #3D5A80;
+    // margin-top: 10px;
+    font-size: 2em;
+    border-bottom: 1px solid;
+    padding-bottom: 5px;
+
+  }
+}
+
+.player-scores {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player-score {
+  display: flex;
+  flex-flow: column;
+  font-size: 1.4em;
+  svg {
+    font-size: 1.7em;
+  }
+  // p {
+  //   font-size: ;
+  // }
+}
