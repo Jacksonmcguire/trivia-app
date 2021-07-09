@@ -57,6 +57,18 @@
   }
 }
 
+.end-game {
+  background-color: black;
+  font-size: 3em;
+  position: absolute;
+  margin-left: 100px;
+  // align-self: flex-end;
+  svg {
+    // backgroundcolor: black
+  }
+
+}
+
 .player-scores {
   display: flex;
   justify-content: space-around;

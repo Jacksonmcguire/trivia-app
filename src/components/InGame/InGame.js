@@ -67,6 +67,7 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
       setRoom(room)
       setError(false)
     })
+
   })
 
   const questionSlides = () => {
@@ -94,6 +95,11 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
     socket.emit('leaving player', room)
   }
 
+  const endGame = () => {
+    socket.emit('end game', room)
+    window.location.pathname = ''
+  }
+
   const evaluateAnswer = (correct, answer) => {
     if (answer === correct) {
       setScore(score + 1)
@@ -109,7 +115,7 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
   return (
     <main className="in-game">
       {
-        !hostView ? <section>{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room}/>
+        !hostView ? <section>{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room} endGame={endGame}/>
       }
     </main>
   )
