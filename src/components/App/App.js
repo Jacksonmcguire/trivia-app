@@ -5,8 +5,9 @@ import { Route, Switch } from 'react-router-dom'
 import { getChosenDeck } from '../../apiCalls'
 import React from 'react';
 import io from "socket.io-client"
+let backend = ('https://trivia-fanatics.herokuapp.com:' + process.env.PORT) || "http://localhost:4000"
 
-export const socket = io.connect("http://localhost:4000");
+export const socket = io.connect(backend);
 class App extends React.Component {
 
   constructor() {
