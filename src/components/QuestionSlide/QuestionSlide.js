@@ -6,6 +6,7 @@ import { array, func, string } from 'prop-types'
 export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAnswer}) => {
 
   const [answer, setAnswer] = useState('')
+  const [answered, setAnswered] = useState(false)
 
   const addAnswers = () => {
     const randomIndex = Math.floor(Math.random() * 4)
@@ -23,9 +24,10 @@ export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAns
 
   const answerQuestion = (e) => {
     e.preventDefault()
+    setAnswered(true)
     if (answer !== '') {
       evaluateAnswer(decodeHTML(correct), answer, question)}
-    clearInputs()
+    // clearInputs()
   }
 
   const updateAnswer = (e) => {
@@ -45,7 +47,7 @@ export const QuestionSlide = ({ incorrectAnswers, correct, question, evaluateAns
     <form className="current-q" onChange={(e) => updateAnswer(e)}>
       <h3>{decodeHTML(question)}</h3>
       {addAnswers()}
-      <button onClick={answerQuestion}>Submit Answer</button>
+      {!answered ? <button onClick={answerQuestion}>Submit Answer</button> : <p>Waiting for the host to advance</p>}
     </form>
   )
 }

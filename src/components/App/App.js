@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
       activeSlides: [],
       games: [],
+      searchStr: ''
     }
   }
 
@@ -32,20 +33,19 @@ class App extends React.Component {
         this.setState({games: manager.games})
       }
       socket.on('update score', (manager) => {
-        console.log(manager)
         if (this.state.games !== manager.games) {
     
         this.setState({games: manager.games})
         }
       })
-      // console.log(this.state.games)
     })  
   }
 
-  generateSlideDeck = async (str, room) => {
-      await getChosenDeck(str)
+  generateSlideDeck = async (str = this.state.searchStr, room) => {
+      return await getChosenDeck(str)
       .then(data => {
-        this.setState({activeSlides: data.results})
+        this.setState({activeSlides: data.results, searchStr: str})
+        return data.results
       })
   } 
   
@@ -55,7 +55,7 @@ class App extends React.Component {
         <header>Trivia App</header>
         <Switch>
         <Route exact path='/'><Lobby activeSlides={this.state.activeSlides} generateSlideDeck={this.generateSlideDeck} stats={this.state.games}/></Route>
-        <Route exact path='/play'><InGame slideDeck={this.state.activeSlides} updateGames={this.updateGames} stats={this.state.games}/></Route>
+        <Route exact path='/play'><InGame slideDeck={this.state.activeSlides} updateGames={this.updateGames} stats={this.state.games} generateSlideDeck={this.generateSlideDeck}/></Route>
         </Switch>
       </div>
     );

@@ -7,7 +7,7 @@ import {Chat} from '../Chat/Chat'
 import {socket} from '../App/App'
 import { HostView } from '../HostView/HostView'
 
-export const InGame = ({slideDeck, updateGames, stats}) => {
+export const InGame = ({slideDeck, updateGames, stats, generateSlideDeck}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
@@ -53,6 +53,10 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
         setRoom(room);
     }) 
 
+    socket.on('advance question', (game) => {
+      setCurrentQuestion(game.currentQ)
+    })
+
     socket.on('new player', ({ manager, slides, room }) => {
       if (manager.games) {
 
@@ -68,31 +72,40 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
       setError(false)
     })
 
+    socket.on('starting new round', (slides) => {
+      setSlides(slides)
+    })
+
   })
 
   const questionSlides = () => {
     console.log(slides)
-    if (slides.length) {
-      const slideCards = slides.map(question => {
-        return (
-          <QuestionSlide
-          category={question.category}
-          incorrectAnswers={question.incorrect_answers}
-          correct={question.correct_answer}
-          question={question.question}
-          type={question.type}
+    if (slides[currentQuestion]) {
+      const slideCard = <QuestionSlide
+          category={slides[currentQuestion].category}
+          incorrectAnswers={slides[currentQuestion].incorrect_answers}
+          correct={slides[currentQuestion].correct_answer}
+          question={slides[currentQuestion].question}
+          type={slides[currentQuestion].type}
           evaluateAnswer={evaluateAnswer}
-          key={question.question}
+          key={slides[currentQuestion].question}
           />
-          )
-        })
         
-      return slideCards[currentQuestion]? slideCards[currentQuestion] : <EndSlide score={hostData} leaveRoom={leaveRoom}/>
-      } else return <div>sorry</div>
+      return slideCard 
+      } else {
+        return <EndSlide score={hostData} leaveRoom={leaveRoom}/>
+      }
+      
   }
 
   const leaveRoom = () => {
     socket.emit('leaving player', room)
+  }
+
+  const newRound = async () => {
+    await generateSlideDeck().then(data => {
+      socket.emit('new round', {room: room, slides: data})
+    })
   }
 
   const endGame = () => {
@@ -108,14 +121,26 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
       setIncorrectAnswers([...incorrectAnswers, answer])
       socket.emit('wrong answer', room)
     }
-    setCurrentQuestion(currentQuestion + 1)
+    // setCurrentQuestion(currentQuestion + 1)
 
   }
 
   return (
     <main className="in-game">
       {
-        !hostView ? <section className="player-view">{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room} endGame={endGame}/>
+        !hostView ? 
+        <section className="player-view">
+          {questionSlides()}<Chat socket={socket} room={room}/>
+        </section> : 
+        <HostView 
+        slideDeck={slides} 
+        players={hostData.players} 
+        socket={socket} 
+        room={room} 
+        endGame={endGame} 
+        currentQuestion={currentQuestion} 
+        newRound={newRound}
+        />
       }
     </main>
   )
