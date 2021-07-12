@@ -5,7 +5,7 @@ export const EndSlide = ({ score, leaveRoom}) => {
   console.log(score)
   const sortedPlayers = score.players && score.players.sort((a, b) => b.correct - a.correct)
 
-  const playerScores = sortedPlayers.map(player => {
+  const playerScores = sortedPlayers && sortedPlayers.map(player => {
     return (
       <article className="player-card">
         <h4>{player.name}</h4>

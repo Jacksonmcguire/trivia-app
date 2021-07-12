@@ -1,12 +1,19 @@
+.host-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .host {
   * {
     list-style-type: none;
   }
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #3D5A80;
   .card {
-    height: 40vh;
+    width: 20%;
+
     justify-self: center;
     h4 {
       color: #E0FBFC;
@@ -24,30 +31,39 @@
   }
 }
 
-.questions {
-  height: 50vh;
-  overflow-y: scroll;
-  border-radius: 10px;
-  h3 {
-    font-size: 2em;
-    font-weight: 800;
-    border-bottom: 1px solid;
-    padding-bottom: 5px;
-    text-align: center;
-    color: #3D5A80
-  }
-  li {
+.current-question {
+  width: 50%;
+  margin: 0 25px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #3D5A80;
+  display: flex;
+  flex-flow: column;
+  p {
     display: flex;
-    align-items: flex-start;
+    font-size: 1.3em;
+
+    align-self: center;
+    
     justify-content: space-between;
-    background-color: #3D5A80;
     color: #E0FBFC;
-    border: 1px solid #E0FBFC;
-    padding: 5px;
-    p {
-      margin: 5px
+    svg {
+      color: #E0FBFC;
+      margin-right: 10px;
     }
   }
+  color: #E0FBFC;
+  button {
+    color: #3D5A80;
+    background-color: #E0FBFC;
+    width: 50%;
+    align-self: center;
+    padding: 10px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+  }
+
 }
 
 .player-card {
@@ -62,26 +78,26 @@
   height: 10em;
 }
 
-.current-question {
-  * {color: #3D5A80}
-  color: #3D5A80
-}
-
 .players {
   height: 50vh;
+  width: 20%;
   overflow-y: scroll;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
 
   width: 100%;
 
 }
 
 .end-game {
-  background-color: #3D5A80;
-  font-size: 3em;
-  position: absolute;
-  margin-left: 100px;
+  color: #3D5A80;
+  display: flex;
+  align-items: center;
+  svg {
+    background-color: #3D5A80;
+    font-size: 3em;
+    margin-left: 100px;
+  }
 }
 
 .player-scores {
@@ -96,7 +112,4 @@
   svg {
     font-size: 1.7em;
   }
-  // p {
-  //   font-size: ;
-  // }
 }
