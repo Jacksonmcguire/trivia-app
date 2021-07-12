@@ -53,6 +53,10 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
         setRoom(room);
     }) 
 
+    socket.on('advance question', (game) => {
+      setCurrentQuestion(game.currentQ)
+    })
+
     socket.on('new player', ({ manager, slides, room }) => {
       if (manager.games) {
 
@@ -72,22 +76,18 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
 
   const questionSlides = () => {
     console.log(slides)
-    if (slides.length) {
-      const slideCards = slides.map(question => {
-        return (
-          <QuestionSlide
-          category={question.category}
-          incorrectAnswers={question.incorrect_answers}
-          correct={question.correct_answer}
-          question={question.question}
-          type={question.type}
+    if (slides[currentQuestion]) {
+      const slideCard = <QuestionSlide
+          category={slides[currentQuestion].category}
+          incorrectAnswers={slides[currentQuestion].incorrect_answers}
+          correct={slides[currentQuestion].correct_answer}
+          question={slides[currentQuestion].question}
+          type={slides[currentQuestion].type}
           evaluateAnswer={evaluateAnswer}
-          key={question.question}
+          key={slides[currentQuestion].question}
           />
-          )
-        })
         
-      return slideCards[currentQuestion]? slideCards[currentQuestion] : <EndSlide score={hostData} leaveRoom={leaveRoom}/>
+      return slideCard? slideCard : <EndSlide score={hostData} leaveRoom={leaveRoom}/>
       } else return <div>sorry</div>
   }
 
@@ -108,14 +108,14 @@ export const InGame = ({slideDeck, updateGames, stats}) => {
       setIncorrectAnswers([...incorrectAnswers, answer])
       socket.emit('wrong answer', room)
     }
-    setCurrentQuestion(currentQuestion + 1)
+    // setCurrentQuestion(currentQuestion + 1)
 
   }
 
   return (
     <main className="in-game">
       {
-        !hostView ? <section className="player-view">{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room} endGame={endGame}/>
+        !hostView ? <section className="player-view">{questionSlides()}<Chat socket={socket} room={room}/></section> : <HostView slideDeck={hostData.slideDeck} players={hostData.players} socket={socket} room={room} endGame={endGame} currentQuestion={currentQuestion}/>
       }
     </main>
   )

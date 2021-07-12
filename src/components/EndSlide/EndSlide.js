@@ -3,7 +3,9 @@ import { BiBadgeCheck, BiX } from 'react-icons/bi';
 import './EndSlide.scss';
 export const EndSlide = ({ score, leaveRoom}) => {
   console.log(score)
-  const playerScores = score.players.map(player => {
+  const sortedPlayers = score.players && score.players.sort((a, b) => b.correct - a.correct)
+
+  const playerScores = sortedPlayers.map(player => {
     return (
       <article className="player-card">
         <h4>{player.name}</h4>
@@ -24,7 +26,6 @@ export const EndSlide = ({ score, leaveRoom}) => {
   return (
     <form className="current-q">
       {playerScores}
-      {/* <h3>You Scored {score + '/' + slideCards.length}</h3> */}
       <Link to="/" onClick={leaveRoom}>Back to Lobby</Link>
     </form>
   )
