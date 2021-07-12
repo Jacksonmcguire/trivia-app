@@ -76,6 +76,9 @@ export const InGame = ({slideDeck, updateGames, stats, generateSlideDeck}) => {
       setSlides(slides)
     })
 
+    socket.on('game ending', () => {
+      window.location.pathname = ''
+    })
   })
 
   const questionSlides = () => {
