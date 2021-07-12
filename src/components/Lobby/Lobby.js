@@ -13,7 +13,8 @@ export class Lobby extends Component {
     this.state = {
       categories: [],
       randomSets: [],
-      
+      name: '',
+      action: '',
     }
   }
 
@@ -22,15 +23,36 @@ export class Lobby extends Component {
     .then(data => this.setState({categories: data.trivia_categories}))
   }
 
+  inputName = (e) => {
+    this.setState({...this.state, name: e.target.value})
+  }
+
+  action = (e) => {
+    // e.preventDefault()
+    if (this.state.name !== '') {
+
+      this.setState({...this.state, action: e.target.name})
+    }
+  }
 
 
   render() {return (
     <main className="lobby">
-      <JoinGameForm/>
-      <NewGameForm activeSlides={this.state.activeSlides} 
+      {this.state.action === '' && <form className="action-form">
+      <input placeholder="name" onChange={this.inputName} required></input>
+      <div>
+      <button className="action-btn" name="host" onClick={this.action}>Host a Game</button>
+      <button className="action-btn" name="join" onClick={this.action}>Join a Game</button>
+      </div>
+      </form>}
+      
+      {this.state.action === 'join' && <JoinGameForm name={this.state.name}/>}
+      {this.state.action === 'host' && <NewGameForm name={this.state.name} 
+      activeSlides={this.state.activeSlides} 
       categories={this.state.categories} 
       generateSlideDeck={this.props.generateSlideDeck}
       stats={this.props.stats}/>
+    }
     </main>
   )}
 }

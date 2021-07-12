@@ -113,3 +113,18 @@
     font-size: 1.7em;
   }
 }
+@media screen and (max-width: 800px) {
+  .host {
+    flex-direction: column;
+    .card {
+      width: 75%;
+      height: 200px;
+      margin: 10px 0;
+    }
+  }
+
+  .players {
+    height: 100px;
+  }
+
+}

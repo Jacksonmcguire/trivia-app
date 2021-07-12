@@ -42,7 +42,7 @@ export class NewGameForm extends React.Component {
     await this.props.generateSlideDeck(fetchUrl, this.state.room)
     if (this.checkRooms()) {
       // window.location.pathname = '/play'
-      socket.emit('create game', {room: this.state['room'], name: this.state['name']})
+      socket.emit('create game', {room: this.state['room'], name: this.props.name})
     } else {
       window.location.pathname = ''
     }
@@ -67,30 +67,38 @@ export class NewGameForm extends React.Component {
     return (
     <form className="new-game"
     onChange={(e) => this.handleChange(e)}>Host Game
-      <select name="difficulty">
-        <option>Difficulty</option>
-        <option>Easy</option>
-        <option>Medium</option>
-        <option>Hard</option>
-      </select>
-      <select name="category">
-        <option>Category</option>
-        {this.categoryOptions()}
-      </select>
-      <input type="number" name="amount" placeholder="Number of Slides" required min="0"/>
-      <div>
-      <input type="radio" name="type" id="boolean"/>
-      <label htmlFor="boolean">True / False</label>
-      <input type="radio" name="type" id="multiple"/>
-      <label htmlFor="multiple">Multiple Choice</label>
+      <div className="input-container">
+        <label for="room">1. Create a room for players to join</label>
+        <input name="room" id="room" placeholder="Room Name" required/>
       </div>
-      <div>
-
-        <input name="room" placeholder="Room Name" required/>
-        <input name="name" placeholder="Username" required/>
+      <div className="input-container">
+        <label for="difficulty">2. Select a question difficulty</label>
+        <select name="difficulty" id="difficulty">
+          <option>Easy</option>
+          <option>Medium</option>
+          <option>Hard</option>
+        </select>
       </div>
+      <div className="input-container">
+        <label>3. Select a category for your questions</label>
+        <select name="category">
+          {this.categoryOptions()}
+        </select>
+      </div>
+      <div className="input-container">
+        <label>4. Set desired number of questions</label>
+        <input type="number" name="amount" placeholder="Number of Questions" required min="0"/>
+      </div>
+        <label>5. Select an answer format for your questions(Mix of both options by default)</label>
+      <div>
+        <input type="radio" name="type" id="boolean"/>
+        <label className="label" htmlFor="boolean">True / False</label>
+        <input type="radio" name="type" id="multiple"/>
+        <label className="label" htmlFor="multiple">Multiple Choice</label>
+      </div>
+      
       <Link to="/play" onClick={() => this.fetchTriviaSet()}>
-        <button>Start</button>
+        <button>Let's Play!</button>
       </Link>
     </form>
   )

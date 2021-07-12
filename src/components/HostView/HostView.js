@@ -34,12 +34,8 @@ export const HostView = ({room, slideDeck, players, socket, endGame, currentQues
   }
 
   const nextQuestion = () => {
-    // if (slideDeck[currentQuestion + 1]) {
     socket.emit('next question', room)
-    // } 
-  }  // Iterate through players, for each, checking if they have as many correct and incorrect answers that would add up
-  // the current question index val + 1
-  // slideDeck[currentQuestion]
+  } 
 
   const playerScores = <div><h3>Players</h3><section className="players">
     {players && sortedPlayers.map(player => {

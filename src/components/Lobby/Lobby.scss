@@ -8,3 +8,44 @@
 .error-msg {
   color: #293241;
 }
+
+.action-form {
+  input {
+    font-size: 5em;
+    background-color: transparent;
+    border: none;
+    color: #3D5A80;
+    border-bottom: 1px solid #3D5A80;
+  }
+}
+
+.action-btn {
+  background-color: #3D5A80;
+  border: none;
+  padding: 10px;
+  margin: 10px 10px;
+  font-size: 5em;
+  border-radius: 5px;
+  padding: .5em;
+
+}
+
+@media screen and (max-width: 1000px) {
+  .lobby {
+    // display: flex;
+    // width: 50%;
+    // height: 100%;
+    // flex-direction: column;
+    // background-color: #3D5A80;
+  }
+
+  .action-form {
+    input {
+      font-size: 2em;
+    }
+    .action-btn {
+      font-size: 2em;
+      padding: 10px;
+    }
+  }
+}
