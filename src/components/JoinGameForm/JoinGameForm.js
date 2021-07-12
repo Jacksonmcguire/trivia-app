@@ -2,18 +2,16 @@ import {socket} from '../App/App'
 import {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import './JoinGame.scss'
-export const JoinGameForm = () => {
+export const JoinGameForm = ({name}) => {
 
   const [room, setRoom] = useState()
-  const [name, setName] = useState()
 
   useEffect(() => {
     socket.on('join game')
   })
 
   const joinGame = (e) => {
-    // e.preventDefault();
-    socket.emit('join game', {room, name})
+    socket.emit('join game', {room: room, name: name})
   }
 
   const textChange = (e, stateMethod) => {
@@ -22,9 +20,8 @@ export const JoinGameForm = () => {
 
   return (
     <form onSubmit={joinGame}>
-      <div className="join-game">Join Game
+      <div className="join-game">
       <input placeholder="Room" value={room} onChange={e => textChange(e, setRoom)}/>
-      <input placeholder="Username" value={name} onChange={e => textChange(e, setName)}/>
       <Link to="/play" onClick={joinGame}>
         <button>Join</button>
       </Link>

@@ -3,22 +3,21 @@
   justify-content: space-around;
   border-radius: 3px;
   flex-flow: column;
-  height: 100%;
+  // height: 100%;
   margin: 0;
   font-size: 1.8em;
-  background-color: #3D5A80;
+  // background-color: #3D5A80;
   padding: 0 1.1em;
   color: #E0FBFC;
   font-weight: 900;
   top: 0;
   border-right: 5px solid;
-  // width: 85%;
   input, button {
     border-radius: 3px;
     border: none;
-    color: #3D5A80;
+    color: #E0FBFC;
     font-size: 1.2em;
-    background-color: #E0FBFC;
+    background-color: #293241;
     height: 2em;
     margin-right: 5px;
     margin-left: 5px;
@@ -27,4 +26,27 @@
     border: 1px solid #E0FBFC;
     width: 50%;
   }
+}
+@media screen and (max-width: 1000px) {
+
+  .join-game {
+    font-size: 1.15em;
+  }
+
+}
+
+@media screen and (max-width: 800px) {
+  .join-game {
+    font-size: 1em;
+    padding: 10px 0;
+    border-right: none;
+    background-color: transparent;
+    // background-color: #3D5A80;
+    input, button {
+      background-color: #293241;
+      color: #E0FBFC;
+    }
+    padding-bottom: 10px
+  }
+
 }

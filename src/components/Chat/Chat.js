@@ -1,6 +1,4 @@
-import TextField from "@material-ui/core/TextField"
-import React, { useEffect, useRef, useState } from "react"
-import io from "socket.io-client"
+import React, { useEffect, useState } from "react"
 import './Chat.scss'
 
 export function Chat({socket, room}) {
