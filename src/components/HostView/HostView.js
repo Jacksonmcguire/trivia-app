@@ -13,9 +13,11 @@ export const HostView = ({room, slideDeck, players, socket, endGame, currentQues
       } else return <p><BiBadgeCheck/>{player.name} is Ready</p>
     })
     let question = ''
+    let answer = ''
     slideDeck && console.log(slideDeck[currentQuestion])
     if (slideDeck && slideDeck[currentQuestion]) {
       question = decodeHTML(slideDeck[currentQuestion].question)
+      answer = decodeHTML(slideDeck[currentQuestion].correct_answer)
     }
     if (slideDeck && slideDeck.length === currentQuestion) {
       return <div className="current-question"><button onClick={newRound}>Start a new round with the same filters</button></div>
@@ -24,8 +26,9 @@ export const HostView = ({room, slideDeck, players, socket, endGame, currentQues
         <div className="current-question">
         <p>
           {question}
+          <i>{answer}</i>
         </p>
-        <p>
+        <p className="ready-or-not">
         {playerAnswers}
         </p>
         <button onClick={nextQuestion}>Next Question</button>

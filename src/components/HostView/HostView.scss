@@ -113,6 +113,17 @@
     font-size: 1.7em;
   }
 }
+.gold {
+  background-color: goldenrod;
+}
+
+.silver {
+  background-color: silver;
+}
+
+.bronze {
+  background-color: rgb(148, 88, 20);
+}
 @media screen and (max-width: 800px) {
   .host {
     flex-direction: column;
@@ -127,4 +138,12 @@
     height: 100px;
   }
 
+  .current-question {
+    width: 350px;
+  }
+  .ready-or-not {
+    display: flex;
+    flex-flow: row wrap;
+    overflow: auto;
+  }
 }

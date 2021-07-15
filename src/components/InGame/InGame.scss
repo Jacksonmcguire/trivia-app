@@ -5,10 +5,18 @@
 
 .player-view {
   display: flex;
-  justify-content: space-around;
+  // flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .card {
+    margin-left: 0;
+  }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 850px) {
+  .player-view {
+    flex-direction: column;
+  }
   .in-game {
     flex-flow: column;
     align-items: center;
@@ -32,6 +40,9 @@
       div {
         height: 7em;
       }
+    }
+    .card {
+      margin-left: 0;
     }
   }
 }
