@@ -43,6 +43,14 @@
 * ![Cypress](https://img.shields.io/badge/cypress-04C38E.svg?&style=for-the-badge&logo=cypress&logoColor=white)
 * ![Node](https://img.shields.io/badge/node.js%20-%2343853D.svg?&style=for-the-badge&logo=node.js&logoColor=white)
 
+## Screen Grabs
+### Host a game
+![Host game](https://media.giphy.com/media/JRPevIgj3DXuZBwhMk/giphy.gif)
+## Join a game
+![Player Join](https://media.giphy.com/media/HOudVk5esgr8mlVm60/giphy.gif)
+## Answer a question
+![Player Answer](https://media.giphy.com/media/KAY9ipJzlgxPitOPi8/giphy.gif)
+
 
 ## Setup
 * To access the site on your local machine:
