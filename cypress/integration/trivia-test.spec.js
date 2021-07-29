@@ -1,27 +1,15 @@
 describe('Trivia App', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000')
-    cy.fixture('question-data').then(( data ) => {
-      cy.intercept('https://opentdb.com/api.php?difficulty=easy&amount=1', {
-        statusCode: 200,
-        body: data
-      })
   })
-  })
-  describe('New game form', () => {
+  describe('Host Game', () => {
     beforeEach(() => {
-      cy.fixture('categories').then(( data ) => {
-        cy.intercept('https://opentdb.com/api_category.php', {
-          statusCode: 200,
-          body: data
-        })
-      })
+      cy.get('input[placeholder="name"]').type('Jackson')
+      cy.get('button').contains('Host').click()
     })
-    
-    it('should show a user a form to start a new game on load', () => {
-      cy.get('main').find('.new-game')
+    it('should allow a user to create a name for the game', () => {
+      cy.get('input[placeholder="Room Name"]').type('game 1').should('have.value', 'game 1')
     })
-
     it('should allow a user to filter by difficulty', () => {
       cy.get('.new-game').get('select[name="difficulty"]').select('Easy').should('have.value', 'Easy')
     })
@@ -34,83 +22,23 @@ describe('Trivia App', () => {
       cy.get('.new-game').get('input[name="amount"]').type(1).should('have.value', 1)
     })
 
-    it('should allow a user to filter by answer type', () => {
-      cy.get('.new-game').get('label[for="boolean"]').click()
-    })
-
-    it('should allow a user to start a game with those filters', () => {
-      cy.get('.new-game').get('select[name="difficulty"]').select('Easy').should('have.value', 'Easy')
-      cy.get('.new-game').get('input[name="amount"]').type(1).should('have.value', 1)
-      cy.get('.new-game').find('button').click()
-      cy.get('.in-game')
+    it('should allow a user to host a game with those filters', () => {
+      cy.get('button').contains("Let's Play").click()
     })
   })
-
-  describe('LobbyScoreBoard', () => {
-
-    it('should have a section to show previous games', () => {
-      cy.get('.new-game').get('select[name="difficulty"]').select('Easy').should('have.value', 'Easy')
-      cy.get('.new-game').get('input[name="amount"]').type(1).should('have.value', 1)
-      cy.get('.new-game').find('button').click()
-      cy.get('.option').first().click()
-      cy.get('button').contains('Submit').click()
-      cy.get('.end-slide').find('a').click()
-      cy.visit('http://localhost:3000')
-      cy.get('.lobby').find('.lobby-score').contains('Entertainment: Film 0/1')
-    })
-
-    it('should allow a user to clear their game history', () => {
-      cy.get('button').contains('Clear History').click()
-      cy.get('.lobby').find('.lobby-score').contains('Entertainment: Film 0/1').should('not.exist')
-    })
-  })
-
-  describe('In Game', () => {
+  describe('Play Game', () => {
     beforeEach(() => {
-      cy.get('.new-game').get('select[name="difficulty"]').select('Easy').should('have.value', 'Easy')
-      cy.get('.new-game').get('input[name="amount"]').type(1).should('have.value', 1)
-      cy.get('.new-game').find('button').click()
-      cy.get('.in-game')
+      cy.get('input[placeholder="name"]').type('Jackson')
+      cy.get('button').contains('Join').click()
     })
-
-    it('should allow a user to select an answer for a question', () => {
-      cy.get('.option').first().click()
-      cy.get('button').contains('Submit').click()
-      cy.get('.in-game').find('.end-slide')
+    it('should allow a user to enter a room to join', () => {
+      cy.get('input[placeholder="Room"]').type('game 1').should('have.value', 'game 1')
+      cy.get('button').contains('Join').click()
     })
-
-    it('should allow a user to return to lobby after answering a question', () => {
-      cy.get('.option').first().click()
-      cy.get('button').contains('Submit').click()
-      cy.get('.end-slide').find('a').click()
-      cy.get('.lobby')
-    })
-
-    it('should allow a user to return to play another round after finishing', () => {
-      cy.get('.option').first().click()
-      cy.get('button').contains('Submit').click()
-      cy.get('.end-slide').find('button').click()
-      cy.get('.in-game')
-    })
-
-    it('should allow a user to see their score if they get the question right', () => {
-      cy.get('.option').last().click()
-      cy.get('button').contains('Submit').click()
-      cy.get('.score-board').contains('Current Round: 1/1')
-    })
-
-    it('should allow a user to see their score if they get the question wrong', () => {
-      cy.get('.option').first().click()
-      cy.get('button').contains('Submit').click()
-      cy.get('.score-board').contains('Current Round: 0/1')
-    })
-
-    it('should allow a user to see their incorrect questions in the event they answer incorrectly', () => {
-      cy.get('.option').first().click()
-      cy.get('button').contains('Submit').click()
-      cy.get('button').contains('Play another Round').click()
-      cy.get('button').contains('incorrect').click()
-      cy.get('.score-board').contains('Who directed the movies')
+    it('should bring up the chat when you join a room', () => {
+      cy.get('input[placeholder="Room"]').type('game 1').should('have.value', 'game 1')
+      cy.get('button').contains('Join').click()
+      cy.get('.render-chat').should('exist')
     })
   })
 })
