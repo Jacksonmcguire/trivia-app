@@ -35,25 +35,31 @@ export const HostView = ({room, slideDeck, players, socket, endGame, currentQues
 
   const playerScores = 
   <table className="players">
+    <thead>
+
     <tr>
       <th>Name</th>
       <th>Ready</th>
       <th><BiBadgeCheck></BiBadgeCheck></th>
       <th><BiX></BiX></th>
     </tr>
+    </thead>
+    <tbody>
+
     {players && sortedPlayers.map(player => {
       const readyOrNot = () => {
         if (player.correct + player.incorrect < currentQuestion + 1) {
           return "No"
         } else return "Yes"
       }
-      return <tr className>
+      return <tr className key={player.name}>
         <td>{player.name}</td>
         <td>{readyOrNot()}</td>
         <td>{player.correct}</td>
         <td>{player.incorrect}</td>
       </tr>
     })}
+    </tbody>
   </table>
 
   return (

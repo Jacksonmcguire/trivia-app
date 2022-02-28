@@ -18,7 +18,6 @@ export const InGame = ({slideDeck, updateGames, stats, generateSlideDeck}) => {
   const [hostData, setHostData] = useState({})
   const [error, setError] = useState(false)
 
-  console.log(socket.id)
   useEffect(() => {
     
     socket.on('new game', ({room, host}) => {
@@ -82,7 +81,6 @@ export const InGame = ({slideDeck, updateGames, stats, generateSlideDeck}) => {
   })
 
   const questionSlides = () => {
-    console.log(slides)
     if (slides[currentQuestion]) {
       const slideCard = <QuestionSlide
           category={slides[currentQuestion].category}

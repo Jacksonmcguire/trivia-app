@@ -10,7 +10,6 @@ export function Chat({socket, room}) {
 		() => {
 			socket.on("new message", ({ name, message }) => {
 				setChat([ ...chat, { name, message } ])
-				console.log(name, message)
 				const chatBox = document.querySelector('.render-chat')
 				chatBox.scrollTop = chatBox.scrollHeight
 			})
@@ -23,7 +22,6 @@ export function Chat({socket, room}) {
 	}
 
 	const onMessageSubmit = (e) => {
-		console.log(room)
 		socket.emit("message", { message: message, id: socket.id, room: room })
 		e.preventDefault()
 		setMessage("")

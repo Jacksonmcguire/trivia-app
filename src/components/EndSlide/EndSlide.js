@@ -4,7 +4,6 @@ import './EndSlide.scss';
 const standings = [{class: "gold", str: '1st Place'}, {class: "silver", str: '2nd Place'}, {class: "bronze", str: '3rd Place'}]
 export const EndSlide = ({ score, leaveRoom}) => {
 
-  console.log(score)
   const sortedPlayers = score.players && score.players.sort((a, b) => b.correct - a.correct)
 
   const playerScores = sortedPlayers && <section className="player-board">{

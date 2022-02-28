@@ -41,7 +41,6 @@ export class NewGameForm extends React.Component {
     })
     await this.props.generateSlideDeck(fetchUrl, this.state.room)
     if (this.checkRooms()) {
-      // window.location.pathname = '/play'
       socket.emit('create game', {room: this.state['room'], name: this.props.name})
     } else {
       window.location.pathname = ''
@@ -55,7 +54,6 @@ export class NewGameForm extends React.Component {
       } else {
 
         const duplicate = this.props.stats.find(game => game.room === this.state['room'])
-        console.log(this.props.stats)
         if (!duplicate) {
           return true
         } else return false
@@ -68,11 +66,11 @@ export class NewGameForm extends React.Component {
     <form className="new-game"
     onChange={(e) => this.handleChange(e)}>Host Game
       <div className="input-container">
-        <label for="room">1. Create a room for players to join</label>
+        <label htmlFor="room">1. Create a room for players to join</label>
         <input name="room" id="room" placeholder="Room Name" required/>
       </div>
       <div className="input-container">
-        <label for="difficulty">2. Select a question difficulty</label>
+        <label htmlFor="difficulty">2. Select a question difficulty</label>
         <select name="difficulty" id="difficulty">
           <option>Easy</option>
           <option>Medium</option>
