@@ -1,6 +1,13 @@
 .host-container {
   display: flex;
-  flex-direction: column;
+  background-color: #3D5A80;
+  width: 90%;
+  justify-content: space-between;
+  .card {
+    border: 1px solid;
+    margin: 5px;
+    padding: 5px;
+  }
 }
 
 .host {
@@ -8,9 +15,11 @@
     list-style-type: none;
   }
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   color: #3D5A80;
+  width: 50%;
   .card {
     width: 20%;
 
@@ -32,10 +41,9 @@
 }
 
 .current-question {
-  width: 50%;
   margin: 0 25px;
   padding: 20px;
-  border-radius: 5px;
+  border: 1px solid ;
   background-color: #3D5A80;
   display: flex;
   flex-flow: column;
@@ -66,43 +74,33 @@
 
 }
 
-.player-card {
-  background-color: #3D5A80;
-  padding: 1em;
-  border: 1px solid #E0FBFC;
-  h4 {
-    font-size: 1.45em;
-  }
-  border-radius: 50%;
-  width: 10em;
-  height: 10em;
-}
-
 .players {
-  height: 50vh;
-  width: 20%;
-  overflow-y: scroll;
-  display: flex;
-  flex-flow: column;
-
+  border-collapse: collapse;
   width: 100%;
-
+  color: white;
+  border: 1px solid;
+  td, th {
+    border: 1px solid;    
+  }
 }
 
 .end-game {
   color: #3D5A80;
   display: flex;
-  align-items: center;
   svg {
     background-color: #3D5A80;
     font-size: 3em;
-    margin-left: 100px;
   }
 }
 
 .player-scores {
   display: flex;
   justify-content: space-around;
+}
+
+.player-card {
+  margin: 5px;
+  border-right: 3px solid;
 }
 
 .player-score {
@@ -113,20 +111,12 @@
     font-size: 1.7em;
   }
 }
-.gold {
-  background-color: goldenrod;
-}
 
-.silver {
-  background-color: silver;
-}
-
-.bronze {
-  background-color: rgb(148, 88, 20);
-}
 @media screen and (max-width: 800px) {
-  .host {
+  .host-container {
     flex-direction: column;
+    align-items: center;
+    width: 90%;
     .card {
       width: 75%;
       height: 200px;
@@ -134,16 +124,23 @@
     }
   }
 
+  .host {
+    width: 70%;
+    padding: 0;
+    margin: 10px;
+  }
+
+  .end-game {
+    align-self: flex-start;
+  }
+
   .players {
-    height: 100px;
+    width: 100%;
+    font-size: 1.2em;
   }
 
   .current-question {
-    width: 350px;
-  }
-  .ready-or-not {
-    display: flex;
-    flex-flow: row wrap;
-    overflow: auto;
+    width: 100%;
+    margin: 10px 0;
   }
 }

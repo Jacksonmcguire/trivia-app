@@ -4,18 +4,28 @@
 }
 
 .player-view {
+  background-color: #3D5A80;
   display: flex;
-  // flex-direction: column;
   align-items: center;
   justify-content: center;
   .card {
     margin-left: 0;
+    border: 1px solid;
+    margin: 5px;
+    padding: 5px;
+  }
+ 
+  .current-q {
+    border: 1px solid;
+    border-radius: 0;
+    flex: 1;
   }
 }
 
 @media screen and (max-width: 850px) {
   .player-view {
     flex-direction: column;
+    background-color: transparent;
   }
   .in-game {
     flex-flow: column;
@@ -25,6 +35,7 @@
       height: 95%;
       margin: 0;
       padding: 0;
+      border: 0;
       button {
         margin-top: 0em;
         width: 5em
@@ -42,7 +53,9 @@
       }
     }
     .card {
-      margin-left: 0;
+      width: 75%;
+      height: 200px;
+      margin: 10px 0;
     }
   }
 }

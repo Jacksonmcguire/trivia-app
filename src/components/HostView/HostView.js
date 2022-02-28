@@ -7,11 +7,7 @@ export const HostView = ({room, slideDeck, players, socket, endGame, currentQues
   const sortedPlayers = players && players.sort((a, b) => b.correct - a.correct)
 
   const currentQ = () => {
-    const playerAnswers = players && players.map(player => {
-      if (player.correct + player.incorrect < currentQuestion + 1) {
-        return <p><BiX/>{player.name} is Not Ready</p>
-      } else return <p><BiBadgeCheck/>{player.name} is Ready</p>
-    })
+    
     let question = ''
     let answer = ''
     slideDeck && console.log(slideDeck[currentQuestion])
@@ -26,11 +22,8 @@ export const HostView = ({room, slideDeck, players, socket, endGame, currentQues
         <div className="current-question">
         <p>
           {question}
+        </p>
           <i>{answer}</i>
-        </p>
-        <p className="ready-or-not">
-        {playerAnswers}
-        </p>
         <button onClick={nextQuestion}>Next Question</button>
       </div>
     ) 
@@ -40,37 +33,37 @@ export const HostView = ({room, slideDeck, players, socket, endGame, currentQues
     socket.emit('next question', room)
   } 
 
-  const playerScores = <div><h3>Players</h3><section className="players">
+  const playerScores = 
+  <table className="players">
+    <tr>
+      <th>Name</th>
+      <th>Ready</th>
+      <th><BiBadgeCheck></BiBadgeCheck></th>
+      <th><BiX></BiX></th>
+    </tr>
     {players && sortedPlayers.map(player => {
-      return <article className="player-card">
-        <h4>{player.name}</h4>
-        <section className="player-scores">
-          <div className="player-score">
-          {player.correct}
-          <BiBadgeCheck></BiBadgeCheck>
-          </div>
-          <div className="player-score">
-          {player.incorrect}
-          <BiX></BiX>
-          </div>
-        </section>
-      </article>
+      const readyOrNot = () => {
+        if (player.correct + player.incorrect < currentQuestion + 1) {
+          return "No"
+        } else return "Yes"
+      }
+      return <tr className>
+        <td>{player.name}</td>
+        <td>{readyOrNot()}</td>
+        <td>{player.correct}</td>
+        <td>{player.incorrect}</td>
+      </tr>
     })}
-  </section>
-  </div>
+  </table>
 
   return (
     <section className="host-container">
       <p className="end-game"><BiX  onClick={endGame}></BiX> End Game</p>
-
     <section className="host">
-
-        {currentQ()}
-
-      <Chat room={room} socket={socket} className="host-chat"></Chat>
-        {playerScores}
-
+      {playerScores}
+      {currentQ()}
     </section>
+      <Chat room={room} socket={socket}></Chat>
     </section>
   )
 }
