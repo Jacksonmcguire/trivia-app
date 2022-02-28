@@ -124,8 +124,6 @@ export const InGame = ({slideDeck, updateGames, stats, generateSlideDeck}) => {
       setIncorrectAnswers([...incorrectAnswers, answer])
       socket.emit('wrong answer', room)
     }
-    // setCurrentQuestion(currentQuestion + 1)
-
   }
 
   return (
